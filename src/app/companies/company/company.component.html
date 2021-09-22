@@ -1,0 +1,88 @@
+<app-header
+  *ngIf="companyDetails"
+  [pageTitle]="companyDetails?.businessName"
+  path="Companies / {{ companyDetails?.businessName }}"
+  icon="mdi-briefcase-check"
+></app-header>
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ companyDetails?.businessName }}</h4>
+        <p class="card-description">{{ companyDetails?.website }}</p>
+        <ngb-tabset class="tab-vertical">
+          <ngb-tab>
+            <ng-template ngbTabTitle>
+              Home
+              <i class="mdi mdi-home-outline text-info ml-2"></i>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="text-center">
+                <img
+                  [src]="
+                    companyDetails.logo?.length > 0
+                      ? companyDetails.logo
+                      : 'assets/images/samples/300x300/12.jpg'
+                  "
+                  onerror="this.src='assets/images/samples/300x300/12.jpg'"
+                  class="center-cropped mr-3 w-25 mb-4"
+                  [alt]="companyDetails.businessName"
+                />
+              </div>
+              <p>
+                {{ companyDetails.companySummary }}
+              </p>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>
+              Business Details
+              <i class="mdi mdi-account-outline text-danger ml-2"></i>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="text-center">
+                <img
+                  [src]="
+                    companyDetails.user?.profilePhoto?.length > 0
+                      ? companyDetails.user?.profilePhoto
+                      : 'assets/images/faces/face1.jpg'
+                  "
+                  onerror="this.src='assets/images/faces/face1.jpg'"
+                  class="center-cropped mb-3 w-25 rounded"
+                  [alt]="companyDetails.user?.screenName"
+                />
+                <h5 class="mt-0" *ngIf="companyDetails.user">
+                  Owner: {{ companyDetails.user.screenName }}
+                </h5>
+                <p class="mb-0" *ngIf="companyDetails.employeeCapacity">
+                  Employee Capacity: {{ companyDetails.employeeCapacity }}
+                </p>
+                <p class="mb-0" *ngIf="companyDetails.city">
+                  Location: {{ companyDetails.city }},
+                  {{ getCountry(companyDetails.country) }}
+                </p>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>
+              Contact
+              <i class="mdi mdi-email-outline text-success ml-2"></i>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <h4>Company Contact Details</h4>
+              <p *ngIf="companyDetails.phoneNumber">
+                <i class="mdi mdi-phone text-info"></i>
+                {{ companyDetails.phoneNumber }}
+              </p>
+              <p *ngIf="companyDetails.businessEmail">
+                <i class="mdi mdi-email-outline text-success"></i>
+                {{ companyDetails.businessEmail }}
+              </p>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>

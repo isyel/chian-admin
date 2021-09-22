@@ -1,0 +1,49 @@
+<app-header pageTitle="Transactions" icon="mdi-repeat"></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Transactions History</h4>
+        <p class="card-description">All Users transactions</p>
+        <div class="table-responsive" *ngIf="fullResult">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Amount(Mybs)</th>
+                <th>Reference</th>
+                <th>Type</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transfer of walletTransfers">
+                <td class="py-1">{{ transfer.amount }}mybs</td>
+                <td>
+                  {{
+                    transfer.referenceNumber ? transfer.referenceNumber : "N/A"
+                  }}
+                </td>
+                <td>
+                  {{
+                    isNumber(transfer.transferType)
+                      ? "N/A"
+                      : transfer.transferType
+                  }}
+                </td>
+                <td>{{ transfer.createdDate | date: "mediumDate" }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <app-list-pagination
+            [fullResult]="fullResult"
+            (getNextPage)="goToSpecificPage($event)"
+          ></app-list-pagination>
+        </div>
+        <div *ngIf="!walletTransfers">
+          <h2>No Wallet Transactions Found</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

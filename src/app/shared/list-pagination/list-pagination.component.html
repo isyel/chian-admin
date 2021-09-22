@@ -1,0 +1,15 @@
+<ngb-pagination
+  *ngIf="fullResult?.totalPages > 1"
+  [collectionSize]="fullResult.totalCount"
+  [pageSize]="fullResult.pageSize"
+  [page]="fullResult.pageIndex + 1"
+  [rotate]="true"
+  [ellipses]="false"
+  aria-label="Default pagination"
+  class="d-flex justify-content-center"
+  (pageChange)="fetchNextPage($event)"
+>
+  <ng-template ngbPaginationPrevious>Prev</ng-template>
+  <ng-template ngbPaginationPages let-page let-pages="pages"></ng-template>
+  <ng-template ngbPaginationNext>Next</ng-template>
+</ngb-pagination>

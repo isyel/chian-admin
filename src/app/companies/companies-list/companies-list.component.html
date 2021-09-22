@@ -1,0 +1,62 @@
+<app-header pageTitle="Companies" icon="mdi-briefcase"></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Companies</h4>
+        <p class="card-description">All Active Companies</p>
+        <div class="table-responsive" *ngIf="fullResult">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Business Name</th>
+                <th>Industry</th>
+                <th>City</th>
+                <th>Capacity</th>
+                <th>Status</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let company of companies">
+                <td class="py-1">
+                  {{ company.businessName }}
+                </td>
+                <td>{{ company.industry?.name }}</td>
+                <td>{{ company.city }}</td>
+                <td>{{ company.employeeCapacity }}</td>
+                <td>
+                  <label
+                    class="badge {{
+                      company.isActive ? 'badge-success' : 'badge-danger'
+                    }}"
+                  >
+                    {{ company.isActive ? "Active" : "Inactive" }}
+                  </label>
+                </td>
+                <td>{{ company.createdDate | date: "mediumDate" }}</td>
+                <td class="d-flex justify-content-between flex-nowrap">
+                  <button
+                    type="button"
+                    class="btn btn-gradient-primary btn-rounded btn-icon"
+                    [routerLink]="['/companies/company', company.id]"
+                  >
+                    <i class="mdi mdi-eye"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <app-list-pagination
+            [fullResult]="fullResult"
+            (getNextPage)="goToSpecificPage($event)"
+          ></app-list-pagination>
+        </div>
+        <div *ngIf="!companies">
+          <h2>No Companies Found</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

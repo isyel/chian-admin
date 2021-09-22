@@ -1,0 +1,57 @@
+<app-header pageTitle="History" icon="mdi-history"></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Transactions History</h4>
+        <p class="card-description">All transactions on this account</p>
+        <div class="table-responsive" *ngIf="fullResult">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Amount(₦)</th>
+                <th>Reference</th>
+                <th>Type</th>
+                <th>Narration</th>
+                <th>Date</th>
+                <th>Approval</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let history of walletHistory">
+                <td class="py-1">
+                  {{ history.amount }}
+                </td>
+                <td>{{ history.transactionReference }}</td>
+                <td>
+                  <label
+                    class="badge {{
+                      history.transactionType == 'credit'
+                        ? 'badge-success'
+                        : 'badge-danger'
+                    }}"
+                  >
+                    {{
+                      history.transactionType === "credit" ? "Credit" : "Debit"
+                    }}
+                  </label>
+                </td>
+                <td>{{ history.narration }}</td>
+                <td>{{ history.createdDate | date: "mediumDate" }}</td>
+                <td>{{ history.approvedDate | date: "mediumDate" }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <app-list-pagination
+            [fullResult]="fullResult"
+            (getNextPage)="goToSpecificPage($event)"
+          ></app-list-pagination>
+        </div>
+        <div *ngIf="!walletHistory">
+          <h2>No Wallet History Found</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

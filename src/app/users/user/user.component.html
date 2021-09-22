@@ -1,0 +1,6 @@
+<app-header
+  *ngIf="userDetails"
+  [pageTitle]="userDetails?.firstName + ' ' + userDetails?.lastName"
+  path="User / {{ userDetails?.firstName }}"
+  icon="mdi-account"
+></app-header>

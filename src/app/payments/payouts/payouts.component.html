@@ -1,0 +1,55 @@
+<app-header pageTitle="Payout Requests" icon="mdi-repeat"></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Payout Requests</h4>
+        <p class="card-description">All Withdrawal Requests Made</p>
+        <div class="table-responsive" *ngIf="fullResult">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Amount(Mybs)</th>
+                <th>Reference</th>
+                <th>User</th>
+                <th>Status</th>
+                <th>Request Date</th>
+                <th>Approval Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let withdrawal of walletWithdrawals">
+                <td class="py-1">{{ withdrawal.amount }}mybs</td>
+                <td>
+                  {{ withdrawal.refNumber ? withdrawal.refNumber : "N/A" }}
+                </td>
+                <td>
+                  {{ withdrawal.user?.firstName }}
+                </td>
+                <td>
+                  <label
+                    class="badge {{
+                      withdrawal.isApproved ? 'badge-success' : 'badge-danger'
+                    }}"
+                  >
+                    {{ withdrawal.isApproved ? "Approved" : "Pending" }}
+                  </label>
+                </td>
+                <td>{{ withdrawal.createdDate | date: "mediumDate" }}</td>
+                <td>{{ withdrawal.approvedDate | date: "mediumDate" }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <app-list-pagination
+            [fullResult]="fullResult"
+            (getNextPage)="goToSpecificPage($event)"
+          ></app-list-pagination>
+        </div>
+        <div *ngIf="!walletWithdrawals">
+          <h2>No Withdrawal Requests</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
