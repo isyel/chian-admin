@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { ForgotPasswordModel } from "src/app/models/AccountModel";
-import { LoginModel } from "src/app/models/LoginModel";
-import { AccountService } from "src/app/services/account/account.service";
-import { AuthService } from "src/app/services/auth/auth.service";
+import { ForgotPasswordModel, LoginModel } from "src/app/models/AuthModel";
+import { AuthenticationService } from "src/app/services/authentication/authentication.service";
 import { NotificationsService } from "src/app/services/notifications/notifications.service";
+import { UserData } from "src/app/user-data";
 
 @Component({
   selector: "app-login",
@@ -13,17 +12,16 @@ import { NotificationsService } from "src/app/services/notifications/notificatio
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  loginCredentials: LoginModel = new LoginModel();
-  forgotPasswordCredentials: ForgotPasswordModel = new ForgotPasswordModel();
+  loginCredentials: LoginModel;
+  forgotPasswordCredentials: ForgotPasswordModel;
   loginForm: FormGroup;
   forgotPasswordForm: FormGroup;
   error: any;
 
   constructor(
     private fb: FormBuilder,
-    private _authService: AuthService,
-    private _accountService: AccountService,
-    //public progress: NgProgress,
+    private _authService: AuthenticationService,
+    private userData: UserData,
     private alert: NotificationsService,
     private router: Router
   ) {}
@@ -44,7 +42,6 @@ export class LoginComponent implements OnInit {
     // this.progress.start();
     this.loginCredentials["email/phone"] = this.loginForm.value.username;
     this.loginCredentials.password = this.loginForm.value.password;
-    this.loginCredentials.rememberMe = this.loginForm.value.remember_me;
     this.loginCredentials.userType = "Admin";
     this._authService.login(this.loginCredentials).subscribe(
       (result) => {
@@ -53,15 +50,12 @@ export class LoginComponent implements OnInit {
         if (result.status) {
           // this.progress.complete();
           console.log("Login now");
-          this._authService.clearLocalStorage();
-          this._authService.setAuthData(result.data);
-          this.alert.showSuccessMessage(
-            '<i class="material-icons">check</i>Login successful'
-          );
+          this.userData.setAuthorizationData(result.data);
+          console.log('<i class="material-icons">check</i>Login successful');
           this.router.navigate(["/dashboard"]);
         } else {
           // this.progress.complete();
-          this.alert.showErrorMessage(result.message);
+          console.error(result.message);
         }
       },
       (error) => {
@@ -69,7 +63,7 @@ export class LoginComponent implements OnInit {
         this.error = error.error.title
           ? error.error.title
           : "Network or Server Error";
-        this.alert.showErrorMessage(
+        console.error(
           error.error.title ? error.error.title : "Network or Server Error"
         );
       }
@@ -78,29 +72,25 @@ export class LoginComponent implements OnInit {
 
   onForgetPassword(form: FormGroup) {
     // this.progress.start();
-    this.forgotPasswordCredentials.phoneNumber =
+    this.forgotPasswordCredentials.email =
       this.forgotPasswordCredentials.email =
         this.forgotPasswordForm.value.email_or_phonenumber;
-    this._accountService
-      .forgotPassword(this.forgotPasswordCredentials)
-      .subscribe(
-        (result) => {
-          // this.progress.complete();
-          if (!result.status) {
-            this.alert.showErrorMessage(result.message);
-            return;
-          }
-          console.log("onRecoverPassword: ", result);
-          this.alert.showSuccessMessage(
-            "Reset Code has been sent to your email address"
-          );
-        },
-        (error) => {
-          console.log("onRecoverPassword error data: ", error);
-          // this.progress.complete();
-          this.alert.showErrorMessage(error.statusText);
-        },
-        () => {}
-      );
+    this._authService.forgotPassword(this.forgotPasswordCredentials).subscribe(
+      (result) => {
+        // this.progress.complete();
+        if (!result.status) {
+          console.error(result.message);
+          return;
+        }
+        console.log("onRecoverPassword: ", result);
+        console.log("Reset Code has been sent to your email address");
+      },
+      (error) => {
+        console.log("onRecoverPassword error data: ", error);
+        // this.progress.complete();
+        console.error(error.statusText);
+      },
+      () => {}
+    );
   }
 }

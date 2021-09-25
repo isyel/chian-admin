@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ResultModel } from "src/app/models/ResultModel";
-import { WalletHistoryModel } from "src/app/models/WalletHistoryModel";
-import { WalletModel } from "src/app/models/WalletModel";
-import { AuthService } from "src/app/services/auth/auth.service";
+import { AuthenticationService } from "src/app/services/authentication/authentication.service";
 import { WalletService } from "src/app/services/wallet/wallet.service";
+import { UserData } from "src/app/user-data";
 
 @Component({
   selector: "app-history",
@@ -12,20 +11,21 @@ import { WalletService } from "src/app/services/wallet/wallet.service";
   styleUrls: ["./history.component.scss"],
 })
 export class HistoryComponent implements OnInit {
-  walletHistory: WalletHistoryModel[];
+  walletHistory: any[];
   fullResult: ResultModel;
   loading: boolean;
-  wallet: WalletModel;
+  wallet: any;
   private subscription: Subscription;
 
   constructor(
     private _walletService: WalletService,
-    public _authService: AuthService
+    public _authService: AuthenticationService,
+    private userData: UserData
   ) {}
 
   ngOnInit(): void {
-    const userDetails = this._authService.userData;
-    this.getUserWallet(userDetails.id);
+    const userDetails = this.userData.getUserData();
+    this.getUserWallet(+userDetails._id);
   }
 
   getUserWallet(userId: number) {

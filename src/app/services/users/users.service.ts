@@ -1,126 +1,47 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import {
-  UserModel,
-  UserFormModel,
-  BlockUserModel,
-} from "src/app/models/UserModel";
-import { ApiService } from "../api.service";
+import { ResultModel } from "src/app/models/ResultModel";
+import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class UsersService {
-  _actionUrl: string = "Users/";
-  data: UserModel[];
+  actionUrl = "user/";
 
-  constructor(public _service: ApiService) {
-    console.log("Hello UserServiceProvider Provider");
-    _service.actionUrl = this._actionUrl;
-  }
+  constructor(public service: BaseServiceService) {}
 
-  public getAll(pageNumber = 0) {
-    this._service.setActionUrl(this._actionUrl);
-    return this._service.getAll<any>(pageNumber);
-  }
-
-  public getById(id: number) {
-    if (!id) {
-      return this._service.handleError("Invalid Request");
-    } else {
-      this._service.setActionUrl(this._actionUrl);
-      return this._service.getById<any>(id);
-    }
-  }
-
-  public addNewUser(formData: UserFormModel) {
-    if (!formData) {
-      return Observable.throw({
-        status: false,
-        message: "Invalid Request Data",
-      });
-    } else {
-      this._service.setActionUrl(this._actionUrl);
-      return this._service.post<any>(formData);
-    }
-  }
-
-  public getUsersBySearch(searchKeyword: string = "") {
-    this._service.setActionUrl(
-      this._actionUrl,
-      "Search/?SearchKeyword=" + searchKeyword
-    );
-    return this._service.getAll<any>();
-  }
-
-  public getProfilePhoto(userId: number) {
-    if (!userId) {
-      return this._service.handleError("Invalid Request");
-    } else {
-      this._service.setActionUrl(this._actionUrl, "GetProfilePhoto/");
-      return this._service.getById<any>(userId);
-    }
-  }
-
-  public uploadProfilePicture(formData: any) {
-    if (!formData) {
-      return Observable.throw({
-        status: false,
-        message: "Invalid Request Data",
-      });
-    } else {
-      this._service.setActionUrl(this._actionUrl, "SetProfilePhoto");
-      return this._service.post<any>(formData);
-    }
-  }
-
-  public blockUser(formData: BlockUserModel) {
-    if (!formData) {
-      return Observable.throw({
-        status: false,
-        message: "Invalid Request Data",
-      });
-    } else {
-      this._service.setActionUrl(this._actionUrl, "BlockUser");
-      return this._service.post<any>(formData);
-    }
+  /**
+   * Get User Profile
+   *
+   * @returns UserModel[]
+   * @memberof UsersService
+   */
+  public getAll() {
+    this.service.setActionUrl(this.actionUrl);
+    return this.service.getAll<ResultModel>();
   }
 
   /**
-   * Edit User Details
+   * Get User Profile
    *
-   * @param {number} userId
-   * @param {any} formData
-   * @returns any
-   * @memberof UserService
+   * @param userId
+   * @returns UserModel
+   * @memberof UsersService
    */
-  public editUser(id: number, formData: any) {
-    if (!formData || !id) {
-      return Observable.throw({
-        status: false,
-        message: "Invalid Request Data",
-      });
-    } else {
-      this._service.setActionUrl(this._actionUrl);
-      return this._service.update<any>(id, formData);
-    }
+  public getProfile(userId: string) {
+    this.service.setActionUrl(this.actionUrl);
+    return this.service.getById<any>(userId);
   }
 
   /**
-   * Delete User Details
+   * Update User Profile
    *
-   * @param {number} userId
-   * @returns any
-   * @memberof UserService
+   * @param payload
+   * @returns UserModel
+   * @memberof UsersService
    */
-  public deleteUser(userId: number) {
-    if (!userId) {
-      return Observable.throw({
-        status: false,
-        message: "Invalid Request Data",
-      });
-    } else {
-      return this._service.delete<any>(userId);
-    }
+  public updateProfile(userId: string, payload: any) {
+    this.service.setActionUrl(this.actionUrl);
+    return this.service.patchUpdate<ResultModel>(userId, payload);
   }
 }

@@ -44,16 +44,7 @@
                 </td>
                 <td>{{ advert?.offerName }}</td>
                 <td>
-                  <label
-                    class="badge  {{
-                      getOfferStatus(advert) == 'Ended'
-                        ? 'badge-danger'
-                        : getOfferStatus(advert) == 'Scheduled'
-                        ? 'badge-info'
-                        : 'badge-success'
-                    }}"
-                    >{{ getOfferStatus(advert) }}</label
-                  >
+                  <label class="badge">{{ getOfferStatus(advert) }}</label>
                 </td>
                 <td>{{ advert?.duration }}</td>
                 <td>{{ advert?.offerAmount }}</td>

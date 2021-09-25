@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { DashboardModel } from "../models/DashboardModel";
-import { CompaniesService } from "../services/companies/companies.service";
 import { DashboardService } from "../services/dashboard/dashboard.service";
 
 @Component({
@@ -23,7 +22,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private _dashboardService: DashboardService
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit() {
@@ -32,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   getDashboard() {
     this.loading = true;
-    this.subscription = this._dashboardService.getDashboard().subscribe(
+    this.subscription = this.dashboardService.getAll().subscribe(
       (result) => {
         console.log("Got to Result in getDashboard");
 

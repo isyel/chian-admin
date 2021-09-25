@@ -2,10 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { CommonMethods } from "src/app/app.common";
-import { AccountTypeEnum } from "src/app/models/Enum/AccountTypeEnum";
 import { ResultModel } from "src/app/models/ResultModel";
 import { UserModel } from "src/app/models/UserModel";
-import { AuthService } from "src/app/services/auth/auth.service";
+import { AuthenticationService } from "src/app/services/authentication/authentication.service";
 import { UsersService } from "src/app/services/users/users.service";
 
 @Component({
@@ -20,7 +19,7 @@ export class UsersListComponent implements OnInit {
   fullResult: ResultModel;
 
   constructor(
-    public _authService: AuthService,
+    public _authService: AuthenticationService,
     private router: Router,
     private _usersService: UsersService,
     public _common: CommonMethods
@@ -36,7 +35,7 @@ export class UsersListComponent implements OnInit {
   }
 
   getUsers(pageNumber = 0) {
-    this.subscription = this._usersService.getAll(pageNumber).subscribe(
+    this.subscription = this._usersService.getAll().subscribe(
       (result) => {
         this.fullResult = result;
         this.users = result.items;
@@ -47,16 +46,15 @@ export class UsersListComponent implements OnInit {
     );
   }
 
-  isAccountCompany(accountType) {
-    return AccountTypeEnum[AccountTypeEnum.company] === accountType;
-  }
-
   goToSpecificPage(event) {
     console.log("goToSpecificPage, event is: ", event);
     this.getUsers(+event - 1);
     //this.fetchNewPage(page);
   }
 
+  isAccountCompany(name) {
+    return true;
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { FundTransferApprovalModel } from "src/app/models/FundTransferApprovalModel";
 import { WalletModel } from "src/app/models/WalletModel";
-import { FundTransferModel } from "src/app/models/WalletTransferModel";
-import { FundWithdrawalModel } from "src/app/models/WalletWithdrawalModel";
-import { WithdrawOTPModel } from "src/app/models/WithdrawOTPModel";
-import { ApiService } from "../api.service";
+import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
   providedIn: "root",
@@ -16,35 +12,34 @@ export class WalletService {
   _walletTransferActionUrl: string = "WalletTransfers/";
   data: WalletModel[];
 
-  constructor(public _service: ApiService) {
+  constructor(public _service: BaseServiceService) {
     console.log("Hello WalletServiceProvider Provider");
-    _service.actionUrl = this._actionUrl;
   }
 
-  public getById(wallet_id: number) {
+  public getById(wallet_id: string) {
     if (!wallet_id) {
-      return this._service.handleError("Invalid Request");
+      console.error("Invalid Request");
     } else {
       return this._service.getById<any>(wallet_id);
     }
   }
 
-  public getByUser(userId: number) {
+  public getByUser(userId: string) {
     this._service.setActionUrl(this._actionUrl, "GetByUser/");
     return this._service.getById<any>(userId);
   }
 
-  public getByCompany(companyId: number) {
-    this._service.actionUrl = this._actionUrl + "GetByCompany/" + companyId;
+  public getByCompany(companyId: string) {
+    this._service.setActionUrl(this._actionUrl + "GetByCompany/" + companyId);
     return this._service.getAll<any>();
   }
 
-  public getByWalletId(walletId: number) {
+  public getByWalletId(walletId: string) {
     this._service.setActionUrl(this._actionUrl, "GetByUser/");
-    return this._service.getByUser<any>(walletId);
+    return this._service.getById<any>(walletId);
   }
 
-  public getWalletHistory(walletId: number, pageNumber: number = 0) {
+  public getWalletHistory(walletId: string, pageNumber: number = 0) {
     this._service.setActionUrl(this._actionUrl + "GetHistory/");
     return this._service.getByIdPaginate<any>(walletId, pageNumber);
   }
@@ -55,7 +50,7 @@ export class WalletService {
     return this._service.getAllPaginate<any>(pageNumber);
   }
 
-  public transferFund(formData: FundTransferModel) {
+  public transferFund(formData: any) {
     if (!formData) {
       return Observable.throw({
         status: false,
@@ -69,7 +64,7 @@ export class WalletService {
     }
   }
 
-  public verifyTransferOTP(formData: FundTransferApprovalModel) {
+  public verifyTransferOTP(formData: any) {
     if (!formData) {
       return Observable.throw({
         status: false,
@@ -81,7 +76,7 @@ export class WalletService {
     }
   }
 
-  public getTransferById(id: number) {
+  public getTransferById(id: string) {
     if (!id) {
       return Observable.throw({
         status: false,
@@ -93,7 +88,7 @@ export class WalletService {
     }
   }
 
-  public getTransferHistory(walletId: number) {
+  public getTransferHistory(walletId: string) {
     if (!walletId) {
       return Observable.throw({
         status: false,
@@ -127,15 +122,15 @@ export class WalletService {
     }
   }
 
-  public getWithdrawalsByWalletId(wallet_id: number) {
+  public getWithdrawalsByWalletId(wallet_id: string) {
     this._service.setActionUrl(
       this._walletWithdrawalsActionUrl,
       "GetByWallet/"
     );
-    return this._service.getByUser<any>(wallet_id);
+    return this._service.getById<any>(wallet_id);
   }
 
-  public withdrawFunds(formData: FundWithdrawalModel) {
+  public withdrawFunds(formData: any) {
     if (!formData) {
       return Observable.throw({
         status: false,
@@ -149,7 +144,7 @@ export class WalletService {
     }
   }
 
-  public verifyWithdrawalOTP(formData: WithdrawOTPModel) {
+  public verifyWithdrawalOTP(formData: any) {
     if (!formData) {
       return Observable.throw({
         status: false,

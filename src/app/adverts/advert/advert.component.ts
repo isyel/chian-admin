@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AdvertModel } from "src/app/models/AdvertModel";
-import { AdvertsService } from "src/app/services/adverts/adverts.service";
+import { OrderModel } from "src/app/models/OrderModel";
+import { OrdersService } from "src/app/services/orders/orders.service";
 
 @Component({
   selector: "app-advert",
@@ -10,28 +10,28 @@ import { AdvertsService } from "src/app/services/adverts/adverts.service";
   styleUrls: ["./advert.component.scss"],
 })
 export class AdvertComponent implements OnInit {
-  advertDetails: AdvertModel;
+  orderDetails: OrderModel;
   loading: boolean;
   private subscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private _advertService: AdvertsService
+    private ordersService: OrdersService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      let advertId = +params["id"]; // (+) converts string 'id' to a number
+      let orderId = +params["id"]; // (+) converts string 'id' to a number
       // In a real app: dispatch action to load the details here.
-      this.getUserDetails(advertId);
+      this.getOrderDetails(orderId);
     });
   }
 
-  getUserDetails(userId) {
+  getOrderDetails(orderId) {
     this.loading = true;
-    this.subscription = this._advertService.getById(userId).subscribe(
+    this.subscription = this.ordersService.getOne(orderId).subscribe(
       (result) => {
-        this.advertDetails = result;
+        this.orderDetails = result;
         this.loading = false;
       },
       (error) => {

@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Configuration } from "./config/app.constants";
-import { ProgressStatusEnum } from "./models/Enum/ProgressStatusEnum";
+import { AppConfig } from "./services/app-config";
 import { SettingsService } from "./services/settings/settings.service";
 
 /**
@@ -17,10 +16,7 @@ export class CommonMethods {
   loading: boolean;
   mybsUnit: number;
 
-  constructor(
-    private settings: SettingsService,
-    private config: Configuration
-  ) {
+  constructor(private settings: SettingsService, private config: AppConfig) {
     this.getMybsUnit();
   }
 
@@ -174,16 +170,5 @@ export class CommonMethods {
   showImage(imageUrl) {
     if (imageUrl.includes("googleusercontent")) return imageUrl;
     return this.config.resourceUrl + imageUrl;
-  }
-
-  isAdvertActive(advertStatus) {
-    return (
-      new Set([
-        ProgressStatusEnum[ProgressStatusEnum.ongoing],
-        ProgressStatusEnum[ProgressStatusEnum.approved],
-        ProgressStatusEnum[ProgressStatusEnum.awaitingCompletion],
-        advertStatus,
-      ]).size === 1
-    );
   }
 }

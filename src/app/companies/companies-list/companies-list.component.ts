@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { CompanyModel } from "src/app/models/CompanyModel";
 import { ResultModel } from "src/app/models/ResultModel";
-import { CompaniesService } from "src/app/services/companies/companies.service";
+import { OrdersService } from "src/app/services/orders/orders.service";
 
 @Component({
   selector: "app-companies-list",
@@ -11,13 +10,13 @@ import { CompaniesService } from "src/app/services/companies/companies.service";
   styleUrls: ["./companies-list.component.scss"],
 })
 export class CompaniesListComponent implements OnInit {
-  companies: CompanyModel[];
+  companies: any[];
   fullResult: ResultModel;
   loading: boolean;
   private subscription: Subscription;
 
   constructor(
-    private _companiesService: CompaniesService,
+    private _companiesService: OrdersService,
     private router: Router
   ) {}
 
@@ -26,7 +25,7 @@ export class CompaniesListComponent implements OnInit {
   }
 
   getCompanies(pageNumber: number = 0) {
-    this.subscription = this._companiesService.getAll(pageNumber).subscribe(
+    this.subscription = this._companiesService.getAll().subscribe(
       (result) => {
         this.companies = result.items;
         this.fullResult = result;

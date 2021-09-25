@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AdvertModel } from "src/app/models/AdvertModel";
+import { OrderModel } from "src/app/models/OrderModel";
 
 @Component({
   selector: "app-advert-table",
@@ -8,7 +8,7 @@ import { AdvertModel } from "src/app/models/AdvertModel";
   styleUrls: ["./advert-table.component.scss"],
 })
 export class AdvertTableComponent implements OnInit {
-  @Input() adverts: AdvertModel[];
+  @Input() adverts: OrderModel[];
   @Input() advertType: string;
 
   constructor(private router: Router) {}

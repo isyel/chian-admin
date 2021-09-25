@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { NgbDropdownConfig } from "@ng-bootstrap/ng-bootstrap";
 import { CommonMethods } from "src/app/app.common";
 import { UserModel } from "src/app/models/UserModel";
-import { AuthService } from "src/app/services/auth/auth.service";
+import { AuthenticationService } from "src/app/services/authentication/authentication.service";
+import { UserData } from "src/app/user-data";
 
 @Component({
   selector: "app-navbar",
@@ -17,14 +18,15 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     config: NgbDropdownConfig,
-    private _authService: AuthService,
+    private _authService: AuthenticationService,
+    private userData: UserData,
     public _common: CommonMethods
   ) {
     config.placement = "bottom-right";
   }
 
   ngOnInit() {
-    this.userDetails = this._authService.userData;
+    this.userDetails = this.userData.getUserData();
   }
 
   // toggle sidebar in small devices

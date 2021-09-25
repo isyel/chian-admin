@@ -1,16 +1,23 @@
 import { Injectable } from "@angular/core";
-import { ApiService } from "../api.service";
+import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class DashboardService {
-  _actionUrl: string = "Dashboard/";
+  actionUrl = "dashboard/";
 
-  constructor(public _service: ApiService) {}
+  constructor(public service: BaseServiceService) {}
 
-  public getDashboard() {
-    this._service.setActionUrl(this._actionUrl);
-    return this._service.getOne<any>();
+  /**
+   * Register User
+   *
+   * @param payload
+   * @returns UserModel
+   * @memberof AuthenticationService
+   */
+  public getAll() {
+    this.service.setActionUrl(this.actionUrl, "Register");
+    return this.service.getAll<any>();
   }
 }

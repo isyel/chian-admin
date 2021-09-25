@@ -1,6 +1,7 @@
-﻿export class DashboardModel {
-  runningAdverts: number;
-  inactive: number;
-  customers: number;
-  walletBalance: number;
-}
+import { BaseModel } from "./BaseModel";
+
+export type DashboardModel = {
+  size: number;
+  price: number;
+  name: string;
+} & BaseModel;

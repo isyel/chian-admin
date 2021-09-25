@@ -1,14 +1,10 @@
-﻿import { PaymentMethodEnum } from "./Enum/PaymentMethodEnum";
-
-export class PaymentModel {
-    public userId: number;
-    public walletId: number;
-    public paymentReference: string;
-    public amount: number;
-    public paymentMethod: PaymentMethodEnum;
-    public paymentChannel: string;
-    public transactionPin: string;
-    public paymentCardId: number;
-    public fromAdmin: boolean = false;
-    public adminUserId: boolean = false;
-}
+export type PaymentModel = {
+  userId: string;
+  orderId: string;
+  reference: string;
+  amount: number;
+  transactionId?: string;
+  paymentMethod?: string;
+  paymentChannel: string;
+  fromAdmin?: false;
+};

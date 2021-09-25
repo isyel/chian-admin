@@ -5,8 +5,8 @@
         <div class="nav-profile-image">
           <img
             [src]="
-              userDetails?.profilePhoto?.length > 0
-                ? _common.showImage(userDetails?.profilePhoto)
+              userDetails?.avatar?.length > 0
+                ? _common.showImage(userDetails?.avatar)
                 : 'assets/images/faces/face1.jpg'
             "
             onerror="this.src='assets/images/faces/face1.jpg'"
@@ -16,11 +16,9 @@
           <!--change to offline or busy as needed-->
         </div>
         <div class="nav-profile-text">
-          <span class="font-weight-bold mb-2"
-            >{{ userDetails.firstName }} {{ userDetails.lastName }}</span
-          >
+          <span class="font-weight-bold mb-2">{{ userDetails.fullName }}</span>
           <span class="text-secondary text-small">{{
-            getAccountType(userDetails.accountType)
+            getAccountType(userDetails.roles[0])
           }}</span>
         </div>
         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
