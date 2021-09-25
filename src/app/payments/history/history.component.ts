@@ -25,10 +25,10 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
     const userDetails = this.userData.getUserData();
-    this.getUserWallet(+userDetails._id);
+    this.getUserWallet(userDetails._id);
   }
 
-  getUserWallet(userId: number) {
+  getUserWallet(userId: string) {
     this.subscription = this._walletService.getByUser(userId).subscribe(
       (result) => {
         this.wallet = result;

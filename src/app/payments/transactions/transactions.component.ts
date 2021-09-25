@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ResultModel } from "src/app/models/ResultModel";
-import { WalletTransferModel } from "src/app/models/WalletTransferModel";
 import { WalletService } from "src/app/services/wallet/wallet.service";
 
 @Component({
@@ -10,7 +9,7 @@ import { WalletService } from "src/app/services/wallet/wallet.service";
   styleUrls: ["./transactions.component.scss"],
 })
 export class TransactionsComponent implements OnInit {
-  walletTransfers: WalletTransferModel[];
+  walletTransfers: any[];
   fullResult: ResultModel;
   loading: boolean;
   private subscription: Subscription;

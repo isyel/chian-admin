@@ -58,8 +58,8 @@
           <div class="nav-profile-img">
             <img
               [src]="
-                userDetails?.profilePhoto?.length > 0
-                  ? _common.showImage(userDetails?.profilePhoto)
+                userDetails?.avatar?.length > 0
+                  ? _common.showImage(userDetails?.avatar)
                   : 'assets/images/faces/face1.jpg'
               "
               onerror="this.src='assets/images/faces/face1.jpg'"
@@ -69,7 +69,7 @@
           </div>
           <div class="nav-profile-text">
             <p class="mb-1 text-black">
-              {{ userDetails.firstName }} {{ userDetails.lastName }}
+              {{ userDetails?.fullName }}
             </p>
           </div>
         </a>

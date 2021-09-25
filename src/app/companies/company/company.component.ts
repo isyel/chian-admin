@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { CompanyModel } from "src/app/models/CompanyModel";
 import { CompaniesService } from "src/app/services/companies/companies.service";
 
 @Component({
@@ -10,7 +9,7 @@ import { CompaniesService } from "src/app/services/companies/companies.service";
   styleUrls: ["./company.component.scss"],
 })
 export class CompanyComponent implements OnInit {
-  companyDetails: CompanyModel;
+  companyDetails: any;
   loading: boolean;
   private subscription: Subscription;
 

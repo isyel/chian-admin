@@ -6,7 +6,6 @@ import {
   RouteConfigLoadStart,
   RouteConfigLoadEnd,
 } from "@angular/router";
-import { AuthenticationService } from "./services/authentication/authentication.service";
 import { UserData } from "./user-data";
 
 @Component({
@@ -22,11 +21,7 @@ export class AppComponent implements OnInit {
   showFooter: boolean = true;
   isLoading: boolean;
 
-  constructor(
-    private router: Router,
-    public _authService: AuthenticationService,
-    private _userData: UserData
-  ) {
+  constructor(private router: Router, private _userData: UserData) {
     // Removing Sidebar, Navbar, Footer for Documentation, Error and Auth pages
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
