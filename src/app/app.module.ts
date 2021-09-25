@@ -17,14 +17,13 @@ import { SpinnerComponent } from "./shared/spinner/spinner.component";
 import { ContentAnimateDirective } from "./shared/directives/content-animate.directive";
 import { TodoListComponent } from "./apps/todo-list/todo-list.component";
 import { HttpClientModule } from "@angular/common/http";
-import { Configuration } from "./config/app.constants";
-import { AccountService } from "./services/account/account.service";
-import { AuthService } from "./services/auth/auth.service";
-import { NotificationsService } from "./services/notifications/notifications.service";
 import { CommonMethods } from "./app.common";
 import { SettingsService } from "./services/settings/settings.service";
 import { SharedModule } from "./shared/shared.module";
 import { Error404Component } from "./error-pages/error404/error404.component";
+import { AppConfig } from "./services/app-config";
+import { AuthenticationService } from "./services/authentication/authentication.service";
+import { NotificationsService } from "./services/notifications/notifications.service";
 
 @NgModule({
   declarations: [
@@ -52,9 +51,8 @@ import { Error404Component } from "./error-pages/error404/error404.component";
   ],
   providers: [
     ThemeService,
-    Configuration,
-    AccountService,
-    AuthService,
+    AppConfig,
+    AuthenticationService,
     NotificationsService,
     SettingsService,
     CommonMethods,

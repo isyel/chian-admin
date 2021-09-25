@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
 
   getUserDetails(userId) {
     this.loading = true;
-    this.subscription = this._usersService.getById(userId).subscribe(
+    this.subscription = this._usersService.getProfile(userId).subscribe(
       (result) => {
         this.userDetails = result;
         this.loading = false;

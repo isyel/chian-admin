@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonMethods } from "src/app/app.common";
-import { AccountTypeEnum } from "src/app/models/Enum/AccountTypeEnum";
 import { UserModel } from "src/app/models/UserModel";
-import { AuthService } from "src/app/services/auth/auth.service";
+import { AuthenticationService } from "src/app/services/authentication/authentication.service";
+import { UserData } from "src/app/user-data";
 
 @Component({
   selector: "app-sidebar",
@@ -18,12 +18,13 @@ export class SidebarComponent implements OnInit {
   public userDetails: UserModel;
 
   constructor(
-    private _authService: AuthService,
-    public _common: CommonMethods
+    private _authService: AuthenticationService,
+    public _common: CommonMethods,
+    private userData: UserData
   ) {}
 
   ngOnInit() {
-    this.userDetails = this._authService.userData;
+    this.userDetails = this.userData.getUserData();
     const body = document.querySelector("body");
 
     // add class 'hover-open' to sidebar navitem while hover in sidebar-icon-only menu
@@ -42,6 +43,6 @@ export class SidebarComponent implements OnInit {
   }
 
   getAccountType(accountType) {
-    return AccountTypeEnum[AccountTypeEnum[accountType]];
+    return true;
   }
 }
