@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { PaymentModel } from 'src/app/models/PaymentModel';
-import { BaseServiceService } from '../base-service.service';
+import { Injectable } from "@angular/core";
+import { PaymentModel } from "src/app/models/PaymentModel";
+import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class PaymentService {
-  actionUrl = 'api/payment/';
+  actionUrl = "api/payment/";
 
   constructor(public service: BaseServiceService) {}
 
@@ -20,5 +20,10 @@ export class PaymentService {
   public create(payload: PaymentModel) {
     this.service.setActionUrl(this.actionUrl);
     return this.service.post<any>(payload);
+  }
+
+  public getAll() {
+    this.service.setActionUrl(this.actionUrl);
+    return this.service.getAllPaginate<any>();
   }
 }

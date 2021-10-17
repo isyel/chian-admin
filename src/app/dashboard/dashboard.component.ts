@@ -2,7 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { DashboardModel } from "../models/DashboardModel";
+import { OrderModel } from "../models/OrderModel";
+import { PaymentModel } from "../models/PaymentModel";
+import { UserModel } from "../models/UserModel";
 import { DashboardService } from "../services/dashboard/dashboard.service";
+import { OrdersService } from "../services/orders/orders.service";
+import { PaymentService } from "../services/payment/payment.service";
+import { UsersService } from "../services/users/users.service";
 
 @Component({
   selector: "app-dashboard",
@@ -13,6 +19,9 @@ export class DashboardComponent implements OnInit {
   dashboardDetails: DashboardModel;
   loading: boolean;
   private subscription: Subscription;
+  payments: number;
+  users: UserModel[];
+  orders: OrderModel[];
 
   toggleProBanner(event) {
     console.log("123");
@@ -22,11 +31,65 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dashboardService: DashboardService
-  ) {}
+    private dashboardService: DashboardService,
+    private usersService: UsersService,
+    private paymentService: PaymentService,
+    private orderService: OrdersService
+  ) {
+    console.log("In dashboard constructor");
+  }
 
   ngOnInit() {
     this.getDashboard();
+    this.getAllPayments();
+    this.getAllOrders();
+    this.getAllUsers();
+  }
+
+  getAllPayments() {
+    this.subscription = this.paymentService.getAll().subscribe(
+      (result) => {
+        console.log("Payments result: ", result);
+
+        this.payments = result.data;
+        this.payments = result.data.reduce(
+          (sum, payment) => sum + payment.amount,
+          0
+        );
+      },
+      (error) => {
+        console.log("Got to Error in getAllPayments");
+        console.log(error);
+      }
+    );
+  }
+
+  getAllUsers() {
+    this.subscription = this.usersService.getAll().subscribe(
+      (result) => {
+        console.log("Result in getAllUsers: ", result);
+
+        this.users = result.data;
+      },
+      (error) => {
+        console.log("Got to Error in getAllUsers");
+        console.log(error);
+      }
+    );
+  }
+
+  getAllOrders() {
+    this.subscription = this.orderService.getAll().subscribe(
+      (result) => {
+        console.log("Result in getAllOrders: ", result);
+
+        this.orders = result.data;
+      },
+      (error) => {
+        console.log("Got to Error in getAllOrders");
+        console.log(error);
+      }
+    );
   }
 
   getDashboard() {
@@ -49,26 +112,32 @@ export class DashboardComponent implements OnInit {
 
   visitSaleChartData = [
     {
-      label: "CHN",
+      label: "10kg",
       data: [20, 40, 15, 35, 25, 50, 30, 20],
       borderWidth: 1,
       fill: false,
     },
     {
-      label: "USA",
+      label: "7kg",
       data: [40, 30, 20, 10, 50, 15, 35, 40],
       borderWidth: 1,
       fill: false,
     },
     {
-      label: "UK",
+      label: "5kg",
       data: [70, 10, 30, 40, 25, 50, 15, 30],
+      borderWidth: 1,
+      fill: false,
+    },
+    {
+      label: "3kg",
+      data: [20, 5, 50, 20, 25, 80, 33, 40],
       borderWidth: 1,
       fill: false,
     },
   ];
 
-  visitSaleChartLabels = ["2013", "2014", "2014", "2015", "2016", "2017"];
+  visitSaleChartLabels = ["March", "April", "May", "June", "July", "August"];
 
   visitSaleChartOptions = {
     responsive: true,
@@ -164,6 +233,24 @@ export class DashboardComponent implements OnInit {
         "rgba(177, 148, 250, 1)",
       ],
     },
+    {
+      backgroundColor: [
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+      ],
+      borderColor: [
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+        "rgba(190, 220, 150, 1)",
+      ],
+    },
   ];
 
   trafficChartData = [
@@ -172,7 +259,7 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  trafficChartLabels = ["Search Engines", "Direct Click", "Bookmarks Click"];
+  trafficChartLabels = ["Delivered", "Pending", "Cancelled"];
 
   trafficChartOptions = {
     responsive: true,
@@ -187,13 +274,13 @@ export class DashboardComponent implements OnInit {
     {
       backgroundColor: [
         "rgba(177, 148, 250, 1)",
-        "rgba(254, 112, 150, 1)",
         "rgba(132, 217, 210, 1)",
+        "rgba(254, 112, 150, 1)",
       ],
       borderColor: [
         "rgba(177, 148, 250, .2)",
-        "rgba(254, 112, 150, .2)",
         "rgba(132, 217, 210, .2)",
+        "rgba(254, 112, 150, .2)",
       ],
     },
   ];

@@ -9,16 +9,12 @@
           alt="circle-image"
         />
         <h4 class="font-weight-normal mb-3">
-          Wallet Balance
+          Payments
           <i class="mdi mdi-chart-line mdi-24px float-right"></i>
         </h4>
         <h2 class="mb-5">
           ₦
-          {{
-            dashboardDetails?.walletBalance
-              ? dashboardDetails.walletBalance
-              : 24000
-          }}
+          {{ payments || 0 }}
         </h2>
         <h6 class="card-text">Increased by 60%</h6>
       </div>
@@ -33,15 +29,11 @@
           alt="circle-image"
         />
         <h4 class="font-weight-normal mb-3">
-          Published Adverts
-          <i class="mdi mdi-television-guide mdi-24px float-right"></i>
+          Orders
+          <i class="mdi mdi-cart mdi-24px float-right"></i>
         </h4>
         <h2 class="mb-5">
-          {{
-            dashboardDetails?.runningAdverts
-              ? dashboardDetails.runningAdverts
-              : 0
-          }}
+          {{ orders?.length || 0 }}
         </h2>
         <h6 class="card-text">Decreased by 10%</h6>
       </div>
@@ -56,11 +48,11 @@
           alt="circle-image"
         />
         <h4 class="font-weight-normal mb-3">
-          Active Users
+          Users
           <i class="mdi mdi-account-multiple mdi-24px float-right"></i>
         </h4>
         <h2 class="mb-5">
-          {{ dashboardDetails?.customers ? dashboardDetails.customers : 0 }}
+          {{ users?.length || 0 }}
         </h2>
         <h6 class="card-text">Increased by 5%</h6>
       </div>
@@ -72,15 +64,16 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex flex-wrap justify-content-between">
-          <h4 class="card-title">Advert Types Statistics</h4>
+          <h4 class="card-title">Cylinder Orders</h4>
           <div
             id="visit-sale-chart-legend"
             class="rounded-legend legend-horizontal"
           >
             <ul>
-              <li><span class="legend-dots"></span>General</li>
-              <li><span class="legend-dots"></span>Poll</li>
-              <li class="mr-0"><span class="legend-dots"></span>Sppc</li>
+              <li><span class="legend-dots"></span>10kg</li>
+              <li><span class="legend-dots"></span>7kg</li>
+              <li><span class="legend-dots"></span>5kg</li>
+              <li class="mr-0"><span class="legend-dots"></span>3kg</li>
             </ul>
           </div>
         </div>
@@ -99,7 +92,7 @@
   <div class="col-lg-5 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Adverts Status</h4>
+        <h4 class="card-title">Order Status</h4>
         <canvas
           baseChart
           [chartType]="'doughnut'"
@@ -114,15 +107,15 @@
         >
           <ul>
             <li>
-              <span class="legend-dots"></span>Active
+              <span class="legend-dots"></span>Delivered
               <span class="float-right">30%</span>
             </li>
             <li>
-              <span class="legend-dots"></span>Scheduled
+              <span class="legend-dots"></span>Pending
               <span class="float-right">30%</span>
             </li>
             <li>
-              <span class="legend-dots"></span>Ended
+              <span class="legend-dots"></span>Cancelled
               <span class="float-right">40%</span>
             </li>
           </ul>
