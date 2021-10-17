@@ -10,7 +10,7 @@ import { AuthDataModel, UserModel } from "./models/UserModel";
 export class UserData {
   hasSeenTutorial = "HAS_SEEN_TUTORIAL";
   authData = "AUTH_DATA";
-  isLoggedIn = "IS_LOGGED_IN";
+  loggedIn = "LOGGED_IN";
   orderHistory = "ORDER_HISTORY";
   pendingOrder = "PENDING_ORDER";
   pushNotificationStatus = "PUSH_NOTIFICATION_STATUS";
@@ -47,8 +47,8 @@ export class UserData {
     return localStorage.setItem(this.userData, JSON.stringify(userData));
   }
 
-  getIsLoggedIn(): boolean {
-    return JSON.parse(localStorage.getItem(this.isLoggedIn));
+  get isLoggedIn(): boolean {
+    return JSON.parse(localStorage.getItem(this.loggedIn));
   }
 
   setisLoggedIn(loginStatus: boolean) {
@@ -56,7 +56,7 @@ export class UserData {
       localStorage.clear();
       this.setHasSeenTutorial();
     }
-    return localStorage.setItem(this.isLoggedIn, JSON.stringify(loginStatus));
+    return localStorage.setItem(this.loggedIn, JSON.stringify(loginStatus));
   }
 
   getOptions(): OptionsModel[] {
@@ -120,5 +120,9 @@ export class UserData {
       this.notifications,
       JSON.stringify(notifications)
     );
+  }
+
+  logout() {
+    localStorage.clear();
   }
 }

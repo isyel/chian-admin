@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   ForgotPasswordModel,
   LoginModel,
   PasswordUpdateModel,
   RegisterModel,
   ReissueTokenModel,
-} from 'src/app/models/AuthModel';
-import { BaseServiceService } from '../base-service.service';
+} from "src/app/models/AuthModel";
+import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthenticationService {
-  actionUrl = 'user/';
+  actionUrl = "user/";
 
   constructor(public service: BaseServiceService) {}
 
@@ -24,7 +24,7 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public register(payload: RegisterModel) {
-    this.service.setActionUrl(this.actionUrl, 'Register');
+    this.service.setActionUrl(this.actionUrl, "Register");
     return this.service.post<any>(payload);
   }
 
@@ -36,7 +36,9 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public login(payload: LoginModel) {
-    this.service.setActionUrl(this.actionUrl, 'Login');
+    console.log("Login USer");
+
+    this.service.setActionUrl(this.actionUrl, "Login");
     return this.service.post<any>(payload);
   }
 
@@ -48,7 +50,7 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public forgotPassword(payload: ForgotPasswordModel) {
-    this.service.setActionUrl(this.actionUrl, 'forgot-password');
+    this.service.setActionUrl(this.actionUrl, "forgot-password");
     return this.service.post<any>(payload);
   }
 
@@ -60,7 +62,7 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public resetPassword(payload: PasswordUpdateModel) {
-    this.service.setActionUrl(this.actionUrl, 'password-reset');
+    this.service.setActionUrl(this.actionUrl, "password-reset");
     return this.service.post<any>(payload);
   }
 
@@ -72,7 +74,7 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public refreshToken(refreshToken: ReissueTokenModel) {
-    this.service.setActionUrl(this.actionUrl, 'RefreshToken');
+    this.service.setActionUrl(this.actionUrl, "RefreshToken");
     return this.service.post<any>(refreshToken);
   }
 
@@ -83,7 +85,7 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public socialAuthentication() {
-    this.service.setActionUrl(this.actionUrl, 'SocialLogin');
+    this.service.setActionUrl(this.actionUrl, "SocialLogin");
     return this.service.getAll<any>();
   }
 
@@ -95,7 +97,7 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   public logout() {
-    this.service.setActionUrl(this.actionUrl, 'logout');
+    this.service.setActionUrl(this.actionUrl, "logout");
     return this.service.getAll<any>();
   }
 }

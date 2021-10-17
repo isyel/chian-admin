@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { NgbDropdownConfig } from "@ng-bootstrap/ng-bootstrap";
 import { CommonMethods } from "src/app/app.common";
 import { UserModel } from "src/app/models/UserModel";
@@ -20,7 +21,8 @@ export class NavbarComponent implements OnInit {
     config: NgbDropdownConfig,
     private _authService: AuthenticationService,
     private userData: UserData,
-    public _common: CommonMethods
+    public _common: CommonMethods,
+    private router: Router
   ) {
     config.placement = "bottom-right";
   }
@@ -63,5 +65,18 @@ export class NavbarComponent implements OnInit {
   // }
   logout() {
     console.log("logout");
+    this._authService.logout().subscribe(
+      (result) => {
+        console.log("result: ", result);
+        this.userData.logout();
+        this.router.navigate(["/user-pages/login"]);
+      },
+      (error) => {
+        // this.progress.complete();
+        console.error(
+          error.error.title ? error.error.title : "Network or Server Error"
+        );
+      }
+    );
   }
 }

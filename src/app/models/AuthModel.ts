@@ -1,4 +1,4 @@
-import { BaseModel } from './BaseModel';
+import { BaseModel } from "./BaseModel";
 
 export type RegisterModel = {
   fullName: string;
@@ -11,7 +11,7 @@ export type RegisterModel = {
 
 export type LoginModel = {
   password: string;
-  'email/phone': string;
+  emailOrPhoneNumber: string;
   userType: string;
 };
 

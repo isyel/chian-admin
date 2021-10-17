@@ -16,21 +16,7 @@ export class CommonMethods {
   loading: boolean;
   mybsUnit: number;
 
-  constructor(private settings: SettingsService, private config: AppConfig) {
-    this.getMybsUnit();
-  }
-
-  getMybsUnit() {
-    this.settings.getSettingsByKey("MybsUnit").subscribe(
-      (result) => {
-        this.mybsUnit = result.value;
-        console.log("Mybes Unit Fetched: ", this.mybsUnit);
-      },
-      (error) => {
-        console.log("Error getting MybsUnit");
-      }
-    );
-  }
+  constructor(private config: AppConfig) {}
 
   createAlert(message = "", title = "", subTitle = "", buttonText = "OK") {
     // return this.alertCtrl.create({

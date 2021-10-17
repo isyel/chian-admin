@@ -24,7 +24,12 @@ export class LoginComponent implements OnInit {
     private userData: UserData,
     private alert: NotificationsService,
     private router: Router
-  ) {}
+  ) {
+    if (this.userData.isLoggedIn) {
+      this.router.navigate(["/dashboard"]);
+      return;
+    }
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -40,9 +45,11 @@ export class LoginComponent implements OnInit {
 
   onLogin(form: FormGroup) {
     // this.progress.start();
-    this.loginCredentials["email/phone"] = this.loginForm.value.username;
-    this.loginCredentials.password = this.loginForm.value.password;
-    this.loginCredentials.userType = "Admin";
+    this.loginCredentials = {
+      emailOrPhoneNumber: this.loginForm.value.username,
+      password: this.loginForm.value.password,
+      userType: "Admin",
+    };
     this._authService.login(this.loginCredentials).subscribe(
       (result) => {
         console.log("result: ", result);
