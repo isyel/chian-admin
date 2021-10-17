@@ -58,8 +58,8 @@
           <div class="nav-profile-img">
             <img
               [src]="
-                userDetails?.avatar?.length > 0
-                  ? _common.showImage(userDetails?.avatar)
+                authData?.userDetails.avatar?.length > 0
+                  ? _common.showImage(authData?.userDetails.avatar)
                   : 'assets/images/faces/face1.jpg'
               "
               onerror="this.src='assets/images/faces/face1.jpg'"
@@ -68,9 +68,7 @@
             <span class="availability-status online"></span>
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black">
-              {{ userDetails?.fullName }}
-            </p>
+            {{ authData?.userDetails.name }}
           </div>
         </a>
         <div

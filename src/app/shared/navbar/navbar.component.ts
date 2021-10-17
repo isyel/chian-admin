@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbDropdownConfig } from "@ng-bootstrap/ng-bootstrap";
 import { CommonMethods } from "src/app/app.common";
-import { UserModel } from "src/app/models/UserModel";
+import { AuthDataModel } from "src/app/models/UserModel";
 import { AuthenticationService } from "src/app/services/authentication/authentication.service";
 import { UserData } from "src/app/user-data";
 
@@ -15,7 +15,7 @@ import { UserData } from "src/app/user-data";
 export class NavbarComponent implements OnInit {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
-  public userDetails: UserModel;
+  public authData: AuthDataModel;
 
   constructor(
     config: NgbDropdownConfig,
@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userDetails = this.userData.getUserData();
+    this.authData = this.userData.getAuthorizationData();
   }
 
   // toggle sidebar in small devices

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonMethods } from "src/app/app.common";
-import { UserModel } from "src/app/models/UserModel";
+import { AuthDataModel } from "src/app/models/UserModel";
 import { AuthenticationService } from "src/app/services/authentication/authentication.service";
 import { UserData } from "src/app/user-data";
 
@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   public advertPagesCollapsed = false;
   public transactionPagesCollapsed = false;
   public companiesPagesCollapsed = false;
-  public userDetails: UserModel;
+  public authData: AuthDataModel;
 
   constructor(
     private _authService: AuthenticationService,
@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userDetails = this.userData.getUserData();
+    this.authData = this.userData.getAuthorizationData();
     const body = document.querySelector("body");
 
     // add class 'hover-open' to sidebar navitem while hover in sidebar-icon-only menu

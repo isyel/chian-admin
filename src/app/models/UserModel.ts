@@ -20,6 +20,7 @@ export type AuthDataModel = {
     userId: string;
     name: string;
     email: string;
+    avatar?: string;
     phoneNumber: string;
     verificationStatus: boolean;
     userName: string;
