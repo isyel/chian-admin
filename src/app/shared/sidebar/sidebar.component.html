@@ -47,10 +47,20 @@
         Users
       </a>
     </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLink="cylinders"
+        routerLinkActive="active"
+        #userPage="routerLinkActive"
+      >
+        Cylinders
+      </a>
+    </li>
     <li
       class="nav-item"
       [ngClass]="{
-        active: adverts.isActive || blacklists.isActive
+        active: adverts.isActive
       }"
     >
       <a
@@ -59,9 +69,9 @@
         [attr.aria-expanded]="advertPagesCollapsed"
         aria-controls="auth"
       >
-        <span class="menu-title">Adverts</span>
+        <span class="menu-title">Orders</span>
         <i class="menu-arrow"></i>
-        <i class="mdi mdi-television-guide menu-icon"></i>
+        <i class="mdi mdi-cart menu-icon"></i>
       </a>
       <div class="collapse" id="auth" [ngbCollapse]="!advertPagesCollapsed">
         <ul class="nav flex-column sub-menu">
@@ -72,17 +82,27 @@
               routerLinkActive="active"
               #adverts="routerLinkActive"
             >
-              Offers List
+              Orders List
             </a>
           </li>
           <li class="nav-item">
             <a
               class="nav-link"
-              routerLink="adverts/blacklists"
+              routerLink="companies/companies-list"
               routerLinkActive="active"
-              #blacklists="routerLinkActive"
+              #companies_list="routerLinkActive"
             >
-              Blacklists
+              Pending Orders
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="companies/companies-list"
+              routerLinkActive="active"
+              #companies_list="routerLinkActive"
+            >
+              In Transit Orders
             </a>
           </li>
         </ul>
@@ -100,9 +120,9 @@
         [attr.aria-expanded]="companiesPagesCollapsed"
         aria-controls="auth"
       >
-        <span class="menu-title">Companies</span>
+        <span class="menu-title">Delivery</span>
         <i class="menu-arrow"></i>
-        <i class="mdi mdi-briefcase menu-icon"></i>
+        <i class="mdi mdi-truck-delivery menu-icon"></i>
       </a>
       <div class="collapse" id="auth" [ngbCollapse]="!companiesPagesCollapsed">
         <ul class="nav flex-column sub-menu">
@@ -113,7 +133,7 @@
               routerLinkActive="active"
               #companies_list="routerLinkActive"
             >
-              Companies List
+              Pending Orders
             </a>
           </li>
         </ul>
@@ -168,21 +188,21 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              routerLink="payments/disputes"
-              routerLinkActive="active"
-              #disputes="routerLinkActive"
-            >
-              Disputes
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
               routerLink="payments/history"
               routerLinkActive="active"
               #history="routerLinkActive"
             >
               History
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="payments/disputes"
+              routerLinkActive="active"
+              #disputes="routerLinkActive"
+            >
+              Disputes
             </a>
           </li>
         </ul>

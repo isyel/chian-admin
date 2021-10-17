@@ -21,8 +21,8 @@
                 <td class="py-1">
                   <img
                     [src]="
-                      user?.profilePhoto?.length > 0
-                        ? _common.showImage(user?.profilePhoto)
+                      user?.avatar?.length > 0
+                        ? _common.showImage(user?.avatar)
                         : 'assets/images/faces/face1.jpg'
                     "
                     onerror="this.src='assets/images/faces/face1.jpg'"
@@ -30,26 +30,26 @@
                     [alt]="user.screenName"
                   />
                 </td>
-                <td>{{ user.firstName }} {{ user.lastName }}</td>
+                <td>{{ user.fullName }}</td>
                 <td>
                   <label
                     class="badge {{
-                      isAccountCompany(user.accountType)
+                      user.roles[0] === 'User'
                         ? 'badge-success'
-                        : 'badge-info'
+                        : user.roles[0] === 'Admin'
+                        ? 'badge-info'
+                        : 'badge-warning'
                     }}"
-                    >{{
-                      isAccountCompany(user.accountType) ? "Company" : "User"
-                    }}</label
+                    >{{ user.roles[0] }}</label
                   >
                 </td>
-                <td>{{ user.isActive ? "Active" : "Inactive" }}</td>
-                <td>{{ user.registrationDate | date: "mediumDate" }}</td>
+                <td>{{ user.emailVerified ? "Verified" : "Unverified" }}</td>
+                <td>{{ user.createdAt | date: "mediumDate" }}</td>
                 <td class="d-flex justify-content-between flex-nowrap">
                   <button
                     type="button"
                     class="btn btn-gradient-primary btn-rounded btn-icon"
-                    [routerLink]="['/users/user', user.id]"
+                    [routerLink]="['/users/user', user._id]"
                   >
                     <i class="mdi mdi-eye"></i>
                   </button>

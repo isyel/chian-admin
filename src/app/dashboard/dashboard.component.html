@@ -108,15 +108,21 @@
           <ul>
             <li>
               <span class="legend-dots"></span>Delivered
-              <span class="float-right">30%</span>
+              <span class="float-right">{{
+                trafficChartData[0].data[0] / orders?.length | percent
+              }}</span>
             </li>
             <li>
               <span class="legend-dots"></span>Pending
-              <span class="float-right">30%</span>
+              <span class="float-right">{{
+                trafficChartData[0].data[1] / orders?.length | percent
+              }}</span>
             </li>
             <li>
               <span class="legend-dots"></span>Cancelled
-              <span class="float-right">40%</span>
+              <span class="float-right">{{
+                trafficChartData[0].data[2] / orders?.length | percent
+              }}</span>
             </li>
           </ul>
         </div>

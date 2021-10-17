@@ -84,6 +84,82 @@ export class DashboardComponent implements OnInit {
         console.log("Result in getAllOrders: ", result);
 
         this.orders = result.data;
+        const delivered = this.orders.filter(
+          (order) => order.orderStatus === "delivered"
+        ).length;
+        const pending = this.orders.filter(
+          (order) => order.orderStatus === "pending"
+        ).length;
+        const cancelled = this.orders.filter(
+          (order) => order.orderStatus === "cancelled"
+        ).length;
+        this.trafficChartData = [
+          {
+            data: [delivered, pending, cancelled],
+          },
+        ];
+        this.visitSaleChartData = [
+          {
+            label: "10kg",
+            data: [
+              0,
+              0,
+              0,
+              0,
+              0,
+              this.orders.filter(
+                (order) => order.orderItems[0].options.size === 10
+              ).length,
+            ],
+            borderWidth: 1,
+            fill: false,
+          },
+          {
+            label: "7kg",
+            data: [
+              0,
+              0,
+              0,
+              0,
+              0,
+              this.orders.filter(
+                (order) => order.orderItems[0].options.size === 7
+              ).length,
+            ],
+            borderWidth: 1,
+            fill: false,
+          },
+          {
+            label: "5kg",
+            data: [
+              0,
+              0,
+              0,
+              0,
+              0,
+              this.orders.filter(
+                (order) => order.orderItems[0].options.size === 5
+              ).length,
+            ],
+            borderWidth: 1,
+            fill: false,
+          },
+          {
+            label: "3kg",
+            data: [
+              0,
+              0,
+              0,
+              0,
+              0,
+              this.orders.filter(
+                (order) => order.orderItems[0].options.size === 3
+              ).length,
+            ],
+            borderWidth: 1,
+            fill: false,
+          },
+        ];
       },
       (error) => {
         console.log("Got to Error in getAllOrders");
@@ -110,34 +186,16 @@ export class DashboardComponent implements OnInit {
 
   date: Date = new Date();
 
-  visitSaleChartData = [
-    {
-      label: "10kg",
-      data: [20, 40, 15, 35, 25, 50, 30, 20],
-      borderWidth: 1,
-      fill: false,
-    },
-    {
-      label: "7kg",
-      data: [40, 30, 20, 10, 50, 15, 35, 40],
-      borderWidth: 1,
-      fill: false,
-    },
-    {
-      label: "5kg",
-      data: [70, 10, 30, 40, 25, 50, 15, 30],
-      borderWidth: 1,
-      fill: false,
-    },
-    {
-      label: "3kg",
-      data: [20, 5, 50, 20, 25, 80, 33, 40],
-      borderWidth: 1,
-      fill: false,
-    },
-  ];
+  visitSaleChartData = [];
 
-  visitSaleChartLabels = ["March", "April", "May", "June", "July", "August"];
+  visitSaleChartLabels = [
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+  ];
 
   visitSaleChartOptions = {
     responsive: true,
@@ -149,7 +207,7 @@ export class DashboardComponent implements OnInit {
             display: false,
             min: 0,
             stepSize: 20,
-            max: 80,
+            max: 50,
           },
           gridLines: {
             drawBorder: false,
@@ -255,7 +313,7 @@ export class DashboardComponent implements OnInit {
 
   trafficChartData = [
     {
-      data: [30, 30, 40],
+      data: [0, 0, 0],
     },
   ];
 

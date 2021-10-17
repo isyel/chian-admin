@@ -1,6 +1,6 @@
 <app-header
   *ngIf="userDetails"
-  [pageTitle]="userDetails?.firstName + ' ' + userDetails?.lastName"
-  path="User / {{ userDetails?.firstName }}"
+  [pageTitle]="userDetails?.fullName"
+  path="User / {{ userDetails?.fullName }}"
   icon="mdi-account"
 ></app-header>

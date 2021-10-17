@@ -21,7 +21,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      let userId = +params["id"]; // (+) converts string 'id' to a number
+      let userId = params["id"];
       // In a real app: dispatch action to load the details here.
       this.getUserDetails(userId);
     });
@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
     this.loading = true;
     this.subscription = this._usersService.getProfile(userId).subscribe(
       (result) => {
-        this.userDetails = result;
+        this.userDetails = result.data;
         this.loading = false;
       },
       (error) => {

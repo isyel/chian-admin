@@ -38,7 +38,7 @@ export class UsersListComponent implements OnInit {
     this.subscription = this._usersService.getAll().subscribe(
       (result) => {
         this.fullResult = result;
-        this.users = result.items;
+        this.users = result.data;
       },
       (error) => {
         console.log("Error: ", error);
