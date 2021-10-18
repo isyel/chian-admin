@@ -52,9 +52,6 @@ export class UsersListComponent implements OnInit {
     //this.fetchNewPage(page);
   }
 
-  isAccountCompany(name) {
-    return true;
-  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

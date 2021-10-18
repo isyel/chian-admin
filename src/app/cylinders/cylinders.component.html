@@ -1,1 +1,52 @@
-<p>cylinders works!</p>
+<app-header pageTitle="Cylinders" icon="mdi-gas-cylinder"></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Cylinder Sizes</h4>
+        <p class="card-description">List of all cylinders</p>
+        <div class="table-responsive" *ngIf="fullResult">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Size(kg)</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items">
+                <td class="py-1">
+                  {{ item.name }}
+                </td>
+                <td>{{ item.price }}</td>
+                <td>
+                  {{ item.size }}
+                </td>
+                <td>{{ item.createdAt | date: "mediumDate" }}</td>
+                <td class="d-flex justify-content-between flex-nowrap">
+                  <button
+                    type="button"
+                    class="btn btn-gradient-primary btn-rounded btn-icon"
+                    (click)="editItem(item)"
+                  >
+                    <i class="mdi mdi-table-edit"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <app-list-pagination
+            [fullResult]="fullResult"
+            (getNextPage)="goToSpecificPage($event)"
+          ></app-list-pagination>
+        </div>
+        <div *ngIf="!items || items.length === 0">
+          <h2>No Cylinder Size Found</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
