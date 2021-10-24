@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getDashboard();
+    // this.getDashboard();
     this.getAllPayments();
     this.getAllOrders();
     this.getAllUsers();

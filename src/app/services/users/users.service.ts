@@ -36,6 +36,7 @@ export class UsersService {
   /**
    * Update User Profile
    *
+   * @param userId
    * @param payload
    * @returns UserModel
    * @memberof UsersService
@@ -43,5 +44,17 @@ export class UsersService {
   public updateProfile(userId: string, payload: any) {
     this.service.setActionUrl(this.actionUrl);
     return this.service.patchUpdate<ResultModel>(userId, payload);
+  }
+
+  /**
+   * Delete User Profile
+   *
+   * @param userId
+   * @returns UserModel
+   * @memberof UsersService
+   */
+  public delete(userId: string) {
+    this.service.setActionUrl(this.actionUrl);
+    return this.service.delete<ResultModel>(userId);
   }
 }

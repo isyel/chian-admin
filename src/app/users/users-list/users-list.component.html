@@ -3,8 +3,21 @@
   <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">App Users</h4>
-        <p class="card-description">List of all app users</p>
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">App Users</h4>
+            <p class="card-description">List of all app users</p>
+          </div>
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="openModal(addUserModalContent)"
+            >
+              Add User<i class="mdi mdi-account-plus ml-1"></i>
+            </button>
+          </div>
+        </div>
         <div class="table-responsive" *ngIf="fullResult">
           <table class="table table-striped">
             <thead>
@@ -53,6 +66,13 @@
                   >
                     <i class="mdi mdi-eye"></i>
                   </button>
+                  <button
+                    type="button"
+                    class="btn btn-gradient-danger btn-rounded btn-icon"
+                    (click)="deleteUser(user._id)"
+                  >
+                    <i class="mdi mdi-delete"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -70,3 +90,191 @@
     </div>
   </div>
 </div>
+<ng-template class="modal fade" #addUserModalContent let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add A New User</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="pt-3" [formGroup]="signupForm">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="fullName"
+                name="fullName"
+                class="form-control form-control-lg"
+                id="fullName"
+                placeholder="User Full Name"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="email"
+                formControlName="email"
+                class="form-control form-control-lg"
+                id="email"
+                placeholder="Email"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <select
+                class="form-control form-control-lg"
+                id="userType"
+                name="userType"
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="userType"
+              >
+                <option
+                  *ngFor="let userType of userTypes"
+                  [ngValue]="userType.id"
+                >
+                  {{ userType.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control form-control-lg"
+                id="password"
+                placeholder="Default Password"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="phoneNumber"
+                name="phoneNumber"
+                class="form-control form-control-lg"
+                id="phoneNumber"
+                placeholder="Phone Number"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="location"
+                class="form-control form-control-lg"
+                id="location"
+                placeholder="Address"
+                [required]="userType !== 'User'"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="vehicleNo"
+                name="vehicleNo"
+                class="form-control form-control-lg"
+                id="vehicleNo"
+                placeholder="Vehicle Plate Number"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="number"
+                formControlName="pricePackage"
+                class="form-control form-control-lg"
+                id="pricePackage"
+                name="pricePackage"
+                placeholder="Price Package(per kg)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="number"
+                formControlName="latitude"
+                name="latitude"
+                class="form-control form-control-lg"
+                id="latitude"
+                placeholder="Latitude"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="number"
+                formControlName="longitude"
+                class="form-control form-control-lg"
+                id="longitude"
+                name="longitude"
+                placeholder="Longitude"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            formControlName="referralId"
+            class="form-control form-control-lg"
+            id="referralId"
+            name="referralId"
+            placeholder="Referral Id"
+          />
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6"></div>
+          <div class="col-lg-6"></div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="handleSignup(modal)"
+        [disabled]="!signupForm.valid || checkFormValidity()"
+      >
+        Create User
+      </button>
+      <button
+        type="button"
+        class="btn btn-light"
+        data-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

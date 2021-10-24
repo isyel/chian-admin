@@ -5,6 +5,7 @@ import { UsersListComponent } from "./users-list/users-list.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { SharedModule } from "../shared/shared.module";
 import { UserComponent } from "./user/user.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   { path: "users-list", component: UsersListComponent },
@@ -15,6 +16,8 @@ const routes: Routes = [
   declarations: [UsersListComponent, UserComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     RouterModule.forChild(routes),
     SharedModule,
