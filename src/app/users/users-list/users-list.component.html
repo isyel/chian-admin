@@ -69,7 +69,9 @@
                   <button
                     type="button"
                     class="btn btn-gradient-danger btn-rounded btn-icon"
-                    (click)="deleteUser(user._id)"
+                    (click)="
+                      openDeleteConfirmationModal(deleteUserConfirm, user._id)
+                    "
                   >
                     <i class="mdi mdi-delete"></i>
                   </button>
@@ -273,6 +275,37 @@
         data-dismiss="modal"
         (click)="modal.close()"
       >
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template
+  #deleteUserConfirm
+  let-modal
+  class="modal fade"
+  aria-labelledby="deleteUserConfirm"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-3">Delete User</h5>
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>All user data would be lost, continue?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="deleteUser(modal)">
+        Delete
+      </button>
+      <button type="button" class="btn btn-light" (click)="modal.close()">
         Cancel
       </button>
     </div>

@@ -3,8 +3,21 @@
   <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Cylinder Sizes</h4>
-        <p class="card-description">List of all cylinders</p>
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Cylinder Sizes</h4>
+            <p class="card-description">List of all cylinders</p>
+          </div>
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="openModal(addCylinderItem)"
+            >
+              Add Item<i class="mdi mdi-gas-cylinder ml-1"></i>
+            </button>
+          </div>
+        </div>
         <div class="table-responsive" *ngIf="fullResult">
           <table class="table table-striped">
             <thead>
@@ -33,6 +46,15 @@
                   >
                     <i class="mdi mdi-table-edit"></i>
                   </button>
+                  <button
+                    type="button"
+                    class="btn btn-gradient-danger btn-rounded btn-icon"
+                    (click)="
+                      openDeleteConfirmationModal(deleteItemConfirm, item._id)
+                    "
+                  >
+                    <i class="mdi mdi-delete"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -50,3 +72,119 @@
     </div>
   </div>
 </div>
+<ng-template class="modal fade" #addCylinderItem let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add A New Item</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="pt-3" [formGroup]="cylinderForm">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="number"
+                formControlName="size"
+                name="size"
+                class="form-control form-control-lg"
+                id="size"
+                placeholder="Cylinder Size(number)"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <input
+                type="number"
+                formControlName="price"
+                class="form-control form-control-lg"
+                id="price"
+                placeholder="Price (₦)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="name"
+              class="form-control form-control-lg"
+              id="name"
+              placeholder="Visible Name"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea
+            type="text"
+            cols="3"
+            formControlName="description"
+            class="form-control form-control-lg"
+            id="description"
+            placeholder="Cylinder Description"
+          ></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="handleCreateItem(modal)"
+        [disabled]="!cylinderForm.valid"
+      >
+        Add New Item
+      </button>
+      <button
+        type="button"
+        class="btn btn-light"
+        data-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template
+  #deleteItemConfirm
+  let-modal
+  class="modal fade"
+  aria-labelledby="deleteItemConfirm"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-3">Delete User</h5>
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>All user data would be lost, continue?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="deleteItem(modal)">
+        Delete
+      </button>
+      <button type="button" class="btn btn-light" (click)="modal.close()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

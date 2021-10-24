@@ -23,13 +23,13 @@ export class UsersListComponent implements OnInit {
   fullResult: ResultModel;
   signupForm: FormGroup;
   userType = "Delivery Agent";
-  canCloseModal = false;
   userTypes = [
     { id: "User", name: "User" },
     { id: "Delivery Agent", name: "Delivery Agent" },
     { id: "Vendor", name: "Vendor" },
     { id: "Admin", name: "Admin" },
   ];
+  userToDelete = null;
 
   constructor(
     public _authService: AuthenticationService,
@@ -63,11 +63,15 @@ export class UsersListComponent implements OnInit {
   }
 
   openModal(exampleModalContent) {
-    this.canCloseModal = false;
     this.modalService.open(exampleModalContent, {
       size: "lg",
-      beforeDismiss: () => this.canCloseModal,
+      beforeDismiss: () => false,
     });
+  }
+
+  openDeleteConfirmationModal(deleteUserConfirm, userId) {
+    this.userToDelete = userId;
+    this.modalService.open(deleteUserConfirm, { size: "sm" });
   }
 
   changeUserType(event) {
@@ -136,11 +140,14 @@ export class UsersListComponent implements OnInit {
     );
   }
 
-  deleteUser(userId) {
-    this.subscription = this._usersService.delete(userId).subscribe(
+  deleteUser(handleDeleteUser) {
+    this.subscription = this._usersService.delete(this.userToDelete).subscribe(
       (result) => {
         console.log("Result of user delete: ", result);
-        this.users = this.users.filter((user) => user._id !== userId);
+        handleDeleteUser.close();
+        this.users = this.users.filter(
+          (user) => user._id !== this.userToDelete
+        );
       },
       (error) => {
         console.log("Error: ", error);

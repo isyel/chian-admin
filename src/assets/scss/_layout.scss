@@ -1,11 +1,16 @@
 /* Layouts */
 
-
 // Sidebar Icon Only
 .sidebar-icon-only {
   .main-panel {
-    @media(min-width: 992px) {
+    @media (min-width: 992px) {
       width: calc(100% - #{$sidebar-width-icon});
     }
   }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
