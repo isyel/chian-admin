@@ -140,6 +140,11 @@ export class UsersListComponent implements OnInit {
     );
   }
 
+  goToSingleUserPage(userDetails: UserModel) {
+    localStorage.setItem("userData", JSON.stringify(userDetails));
+    this.router.navigate(["/users/user/" + userDetails._id]);
+  }
+
   deleteUser(handleDeleteUser) {
     this.subscription = this._usersService.delete(this.userToDelete).subscribe(
       (result) => {

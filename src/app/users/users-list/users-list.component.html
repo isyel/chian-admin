@@ -62,7 +62,7 @@
                   <button
                     type="button"
                     class="btn btn-gradient-primary btn-rounded btn-icon"
-                    [routerLink]="['/users/user', user._id]"
+                    (click)="goToSingleUserPage(user)"
                   >
                     <i class="mdi mdi-eye"></i>
                   </button>
@@ -182,9 +182,9 @@
             <div class="form-group">
               <input
                 type="text"
-                formControlName="location"
+                formControlName="address"
                 class="form-control form-control-lg"
-                id="location"
+                id="address"
                 placeholder="Address"
                 [required]="userType !== 'User'"
               />

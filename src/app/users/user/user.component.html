@@ -4,3 +4,162 @@
   path="User / {{ userDetails?.fullName }}"
   icon="mdi-account"
 ></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <form class="pt-3" [formGroup]="userUpdateForm">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="fullName"
+                  name="fullName"
+                  class="form-control form-control-lg"
+                  id="fullName"
+                  placeholder="User Full Name"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="form-control form-control-lg"
+                  id="email"
+                  placeholder="Email"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <select
+                  class="form-control form-control-lg"
+                  id="userType"
+                  name="userType"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="userType"
+                >
+                  <option
+                    *ngFor="let userType of userTypes"
+                    [ngValue]="userType.id"
+                  >
+                    {{ userType.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="password"
+                  formControlName="password"
+                  class="form-control form-control-lg"
+                  id="password"
+                  placeholder="Default Password"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="phoneNumber"
+                  name="phoneNumber"
+                  class="form-control form-control-lg"
+                  id="phoneNumber"
+                  placeholder="Phone Number"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="address"
+                  class="form-control form-control-lg"
+                  id="address"
+                  placeholder="Address"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="vehicleNo"
+                  name="vehicleNo"
+                  class="form-control form-control-lg"
+                  id="vehicleNo"
+                  placeholder="Vehicle Plate Number"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="number"
+                  formControlName="pricePackage"
+                  class="form-control form-control-lg"
+                  id="pricePackage"
+                  name="pricePackage"
+                  placeholder="Price Package(per kg)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="number"
+                  formControlName="latitude"
+                  name="latitude"
+                  class="form-control form-control-lg"
+                  id="latitude"
+                  placeholder="Latitude"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <input
+                  type="number"
+                  formControlName="longitude"
+                  class="form-control form-control-lg"
+                  id="longitude"
+                  name="longitude"
+                  placeholder="Longitude"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="referralId"
+              class="form-control form-control-lg"
+              id="referralId"
+              name="referralId"
+              placeholder="Referral Id"
+            />
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-lg-6"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
