@@ -1,0 +1,33 @@
+<app-header pageTitle="Unassigned Orders" icon="mdi-cart"></app-header>
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Unassigned Orders</h4>
+        <p class="card-description">A list of all unassigned orders</p>
+        <ngb-tabset type="pills" class="pills-success">
+          <ngb-tab title="Unassigned To Agents">
+            <ng-template ngbTabContent>
+              <app-pending-orders-template
+                [orders]="unassignedAgents"
+                orderType="UnassignedAgents"
+              ></app-pending-orders-template>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Unassigned To Vendors">
+            <ng-template ngbTabContent>
+              <app-pending-orders-template
+                [orders]="unassignedVendors"
+                orderType="UnassignedVendors"
+              ></app-pending-orders-template>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+        <app-list-pagination
+          [fullResult]="fullResultAgents"
+          (getNextPage)="goToSpecificPage($event)"
+        ></app-list-pagination>
+      </div>
+    </div>
+  </div>
+</div>

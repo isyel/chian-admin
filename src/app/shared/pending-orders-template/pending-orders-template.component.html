@@ -1,0 +1,58 @@
+<div class="table-responsive" *ngIf="orders && orders.length > 0">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Amount(₦)</th>
+        <th>Address</th>
+        <th>Payment Method</th>
+        <th>Status</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td class="py-1">
+          {{ order.orderItems[0].options.name }} x
+          {{ order.orderItems[0].quantity }}
+        </td>
+        <td>{{ order.totalPrice }}</td>
+        <td>
+          {{ order.deliveryAddress.street }}, {{ order.deliveryAddress.city }}
+        </td>
+        <td>
+          {{
+            order.paymentType === "payWithCard"
+              ? "Card Payment"
+              : "Pay On Delivery"
+          }}
+        </td>
+        <td>
+          <label
+            class="badge {{
+              order.orderStatus === 'delivered'
+                ? 'badge-success'
+                : 'badge-danger'
+            }}"
+          >
+            {{ order.orderStatus }}
+          </label>
+        </td>
+        <td>{{ order.createdAt | date: "mediumDate" }}</td>
+        <td class="d-flex justify-content-between flex-nowrap">
+          <button
+            type="button"
+            class="btn btn-gradient-primary btn-rounded btn-icon"
+            (click)="goToOrder(order._id)"
+          >
+            <i class="mdi mdi-eye"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+</div>
+<div *ngIf="!orders || orders.length === 0">
+  <h2>No Unassigned Order</h2>
+</div>

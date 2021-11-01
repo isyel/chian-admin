@@ -22,9 +22,11 @@ const routes: Routes = [
       import("./cylinders/cylinders.module").then((m) => m.CylindersModule),
   },
   {
-    path: "companies",
+    path: "pending-orders",
     loadChildren: () =>
-      import("./companies/companies.module").then((m) => m.CompaniesModule),
+      import("./pending-orders/pending-orders.module").then(
+        (m) => m.PendingOrdersModule
+      ),
   },
   {
     path: "payments",

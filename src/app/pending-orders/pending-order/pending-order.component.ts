@@ -4,11 +4,11 @@ import { Subscription } from "rxjs";
 import { CompaniesService } from "src/app/services/companies/companies.service";
 
 @Component({
-  selector: "app-company",
-  templateUrl: "./company.component.html",
-  styleUrls: ["./company.component.scss"],
+  selector: "app-pending-order",
+  templateUrl: "./pending-order.component.html",
+  styleUrls: ["./pending-order.component.scss"],
 })
-export class CompanyComponent implements OnInit {
+export class PendingOrderComponent implements OnInit {
   companyDetails: any;
   loading: boolean;
   private subscription: Subscription;
