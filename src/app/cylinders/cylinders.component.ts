@@ -77,8 +77,8 @@ export class CylindersComponent implements OnInit {
   getItems(pageNumber = 0) {
     this.subscription = this.optionsService.getAll().subscribe(
       (result) => {
-        this.fullResult = result;
-        this.items = result.data;
+        this.fullResult = result.data;
+        this.items = result.data.data;
       },
       (error) => {
         console.log("Error: ", error);

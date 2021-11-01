@@ -130,8 +130,8 @@ export class UsersListComponent implements OnInit {
   getUsers(pageNumber = 0) {
     this.subscription = this._usersService.getAll().subscribe(
       (result) => {
-        this.fullResult = result;
-        this.users = result.data;
+        this.fullResult = result.data;
+        this.users = result.data.data;
         console.log("this.users: ", this.users);
       },
       (error) => {

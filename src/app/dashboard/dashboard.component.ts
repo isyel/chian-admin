@@ -50,9 +50,7 @@ export class DashboardComponent implements OnInit {
     this.subscription = this.paymentService.getAll().subscribe(
       (result) => {
         console.log("Payments result: ", result);
-
-        this.payments = result.data;
-        this.payments = result.data.reduce(
+        this.payments = result.data.data.reduce(
           (sum, payment) => sum + payment.amount,
           0
         );
@@ -69,7 +67,7 @@ export class DashboardComponent implements OnInit {
       (result) => {
         console.log("Result in getAllUsers: ", result);
 
-        this.users = result.data;
+        this.users = result.data.data;
       },
       (error) => {
         console.log("Got to Error in getAllUsers");
@@ -83,12 +81,13 @@ export class DashboardComponent implements OnInit {
       (result) => {
         console.log("Result in getAllOrders: ", result);
 
-        this.orders = result.data;
+        this.orders = result.data.data;
         const delivered = this.orders.filter(
           (order) => order.orderStatus === "delivered"
         ).length;
         const pending = this.orders.filter(
-          (order) => order.orderStatus === "pending"
+          (order) =>
+            order.orderStatus === "pending" || order.orderStatus === "created"
         ).length;
         const cancelled = this.orders.filter(
           (order) => order.orderStatus === "cancelled"

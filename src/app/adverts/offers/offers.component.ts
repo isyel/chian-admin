@@ -36,7 +36,7 @@ export class OffersComponent implements OnInit {
         this.fullResult = result;
         console.log("this.fullResult: ", this.fullResult);
 
-        this.processOfferType(result.items);
+        this.processOfferType(result.data);
       },
       (error) => {
         console.log(error);

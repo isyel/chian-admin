@@ -67,12 +67,8 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         // this.progress.complete();
-        this.error = error.error.title
-          ? error.error.title
-          : "Network or Server Error";
-        console.error(
-          error.error.title ? error.error.title : "Network or Server Error"
-        );
+        console.log("error: ", error);
+        this.error = error;
       }
     );
   }

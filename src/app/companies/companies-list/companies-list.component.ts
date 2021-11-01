@@ -27,7 +27,7 @@ export class CompaniesListComponent implements OnInit {
   getCompanies(pageNumber: number = 0) {
     this.subscription = this._companiesService.getAll().subscribe(
       (result) => {
-        this.companies = result.items;
+        this.companies = result.data;
         this.fullResult = result;
         this.loading = false;
         localStorage.setItem("companies", JSON.stringify(result));
