@@ -43,6 +43,9 @@
                     type="button"
                     class="btn btn-gradient-primary btn-rounded btn-icon"
                     (click)="editItem(item)"
+                    routerLink="/cylinders/cylinder/{{ item._id }}"
+                    routerLinkActive
+                    #cylinder="routerLinkActive"
                   >
                     <i class="mdi mdi-table-edit"></i>
                   </button>
@@ -169,7 +172,7 @@
 >
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel-3">Delete User</h5>
+      <h5 class="modal-title" id="exampleModalLabel-3">Delete Cylinder?</h5>
       <button
         type="button"
         class="close"
@@ -180,7 +183,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <p>All user data would be lost, continue?</p>
+      <p>Action is not reversible, continue?</p>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger" (click)="deleteItem(modal)">

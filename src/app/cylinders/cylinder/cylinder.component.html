@@ -1,1 +1,86 @@
-<p>cylinder works!</p>
+<app-header
+  *ngIf="cylinder"
+  [pageTitle]="cylinder?.name"
+  path="User / {{ cylinder?.name }}"
+  icon="mdi-gas-cylinder"
+></app-header>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="alert alert-success" role="alert" *ngIf="response">
+          {{ response || "Error Logging in" }}
+        </div>
+        <form
+          class="pt-3"
+          [formGroup]="cylinderForm"
+          (ngSubmit)="updateCylinder()"
+        >
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="size">Cylinder Size</label>
+                <input
+                  type="number"
+                  formControlName="size"
+                  name="size"
+                  class="form-control form-control-lg"
+                  id="size"
+                  placeholder="Cylinder Size(number)"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="price">Cylinder Price</label>
+                <input
+                  type="number"
+                  formControlName="price"
+                  class="form-control form-control-lg"
+                  id="price"
+                  placeholder="Price (₦)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group">
+              <label for="name">Cylinder Visible Name</label>
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control form-control-lg"
+                id="name"
+                placeholder="Visible Name"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Cylinder Description (optional)</label>
+            <textarea
+              type="text"
+              cols="3"
+              formControlName="description"
+              class="form-control form-control-lg"
+              id="description"
+              placeholder="Cylinder Description"
+            ></textarea>
+          </div>
+          <div class="mt-3">
+            <button
+              class="
+                btn btn-block btn-primary btn-lg
+                font-weight-medium
+                auth-form-btn
+              "
+              [disabled]="!cylinderForm.valid"
+            >
+              Update Item
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
