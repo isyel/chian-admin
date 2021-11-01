@@ -14,6 +14,7 @@ export type UserModel = {
   longitude: string;
   referralId: string;
   address: string;
+  kind: string;
   roles: [string];
   avatar: string;
 } & BaseModel;

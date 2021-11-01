@@ -18,6 +18,7 @@ export class CylinderComponent implements OnInit {
   cylinderId: string;
   private subscription: Subscription;
   response: any;
+  error: any;
 
   constructor(
     private optionsService: OptionsService,
@@ -67,7 +68,7 @@ export class CylinderComponent implements OnInit {
   }
 
   updateCylinder() {
-    this.response = null;
+    this.response = this.error = null;
     const createCylinderData: OptionsModel = {
       name: this.cylinderForm.value.name,
       size: this.cylinderForm.value.size,
@@ -84,7 +85,7 @@ export class CylinderComponent implements OnInit {
         }
       },
       (error) => {
-        this.response = error.messagr || "Item could not be updated";
+        this.error = error.message || "Item could not be updated";
         console.error(this.commonMethods.hasErrorProperties(error));
       }
     );

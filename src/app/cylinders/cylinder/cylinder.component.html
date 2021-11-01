@@ -9,7 +9,10 @@
     <div class="card">
       <div class="card-body">
         <div class="alert alert-success" role="alert" *ngIf="response">
-          {{ response || "Error Logging in" }}
+          {{ response }}
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+          Error: {{ error }}
         </div>
         <form
           class="pt-3"
