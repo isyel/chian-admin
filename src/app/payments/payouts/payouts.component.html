@@ -5,7 +5,7 @@
       <div class="card-body">
         <h4 class="card-title">Payout Requests</h4>
         <p class="card-description">All Withdrawal Requests Made</p>
-        <div class="table-responsive" *ngIf="fullResult">
+        <div class="table-responsive" *ngIf="payouts?.length > 0">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -18,7 +18,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let withdrawal of walletWithdrawals">
+              <tr *ngFor="let withdrawal of payouts">
                 <td class="py-1">{{ withdrawal.amount }}mybs</td>
                 <td>
                   {{ withdrawal.refNumber ? withdrawal.refNumber : "N/A" }}
@@ -46,8 +46,8 @@
             (getNextPage)="goToSpecificPage($event)"
           ></app-list-pagination>
         </div>
-        <div *ngIf="!walletWithdrawals">
-          <h2>No Withdrawal Requests</h2>
+        <div *ngIf="!payouts || payouts.length === 0">
+          <h2>No Payouts Pending</h2>
         </div>
       </div>
     </div>

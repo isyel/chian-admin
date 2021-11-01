@@ -11,8 +11,8 @@
               <tr>
                 <th>Amount(₦)</th>
                 <th>Reference</th>
-                <th>Type</th>
-                <th>Narration</th>
+                <th>Status</th>
+                <th>Payment Channel</th>
                 <th>Date</th>
                 <th>Approval</th>
               </tr>
@@ -22,23 +22,25 @@
                 <td class="py-1">
                   {{ history.amount }}
                 </td>
-                <td>{{ history.transactionReference }}</td>
+                <td>{{ history.reference }}</td>
                 <td>
                   <label
                     class="badge {{
-                      history.transactionType == 'credit'
+                      history.paymentStatus == 'success'
                         ? 'badge-success'
                         : 'badge-danger'
                     }}"
                   >
                     {{
-                      history.transactionType === "credit" ? "Credit" : "Debit"
+                      history.paymentStatus === "success"
+                        ? "Completed"
+                        : "Pending"
                     }}
                   </label>
                 </td>
-                <td>{{ history.narration }}</td>
-                <td>{{ history.createdDate | date: "mediumDate" }}</td>
-                <td>{{ history.approvedDate | date: "mediumDate" }}</td>
+                <td>{{ history.paymentChannel }}</td>
+                <td>{{ history.createdAt | date: "mediumDate" }}</td>
+                <td>{{ history.updatedAt | date: "mediumDate" }}</td>
               </tr>
             </tbody>
           </table>
@@ -49,7 +51,7 @@
           ></app-list-pagination>
         </div>
         <div *ngIf="!walletHistory">
-          <h2>No Wallet History Found</h2>
+          <h2>No Payments Found</h2>
         </div>
       </div>
     </div>

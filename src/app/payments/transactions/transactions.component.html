@@ -5,7 +5,7 @@
       <div class="card-body">
         <h4 class="card-title">Transactions History</h4>
         <p class="card-description">All Users transactions</p>
-        <div class="table-responsive" *ngIf="fullResult">
+        <div class="table-responsive" *ngIf="transactions?.length > 0">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -16,21 +16,23 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let transfer of walletTransfers">
-                <td class="py-1">{{ transfer.amount }}mybs</td>
+              <tr *ngFor="let transaction of transactions">
+                <td class="py-1">{{ transaction.amount }}mybs</td>
                 <td>
                   {{
-                    transfer.referenceNumber ? transfer.referenceNumber : "N/A"
+                    transaction.referenceNumber
+                      ? transaction.referenceNumber
+                      : "N/A"
                   }}
                 </td>
                 <td>
                   {{
-                    isNumber(transfer.transferType)
+                    isNumber(transaction.transferType)
                       ? "N/A"
-                      : transfer.transferType
+                      : transaction.transferType
                   }}
                 </td>
-                <td>{{ transfer.createdDate | date: "mediumDate" }}</td>
+                <td>{{ transaction.createdDate | date: "mediumDate" }}</td>
               </tr>
             </tbody>
           </table>
@@ -40,7 +42,7 @@
             (getNextPage)="goToSpecificPage($event)"
           ></app-list-pagination>
         </div>
-        <div *ngIf="!walletTransfers">
+        <div *ngIf="!transactions || transactions.length === 0">
           <h2>No Wallet Transactions Found</h2>
         </div>
       </div>

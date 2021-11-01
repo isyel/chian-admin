@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { PaymentModel } from "src/app/models/PaymentModel";
+import { ResultModel } from "src/app/models/ResultModel";
 import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
@@ -22,8 +23,15 @@ export class PaymentService {
     return this.service.post<any>(payload);
   }
 
-  public getAll() {
+  /**
+   * Get Payment History
+   *
+   * @param pageNumber
+   * @returns ResultModel
+   * @memberof PaymentService
+   */
+  public getHistory(pageNumber = 1) {
     this.service.setActionUrl(this.actionUrl);
-    return this.service.getAllPaginate<any>();
+    return this.service.getAllPaginate<ResultModel>(pageNumber);
   }
 }

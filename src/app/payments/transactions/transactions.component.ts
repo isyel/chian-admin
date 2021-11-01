@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ResultModel } from "src/app/models/ResultModel";
-import { WalletService } from "src/app/services/wallet/wallet.service";
+import { TransactionsService } from "src/app/services/transactions/transactions.service";
 
 @Component({
   selector: "app-transactions",
@@ -9,12 +9,12 @@ import { WalletService } from "src/app/services/wallet/wallet.service";
   styleUrls: ["./transactions.component.scss"],
 })
 export class TransactionsComponent implements OnInit {
-  walletTransfers: any[];
+  transactions: any[];
   fullResult: ResultModel;
   loading: boolean;
   private subscription: Subscription;
 
-  constructor(private _walletService: WalletService) {}
+  constructor(private _transactionService: TransactionsService) {}
 
   ngOnInit(): void {
     this.getTransactions();
@@ -22,19 +22,17 @@ export class TransactionsComponent implements OnInit {
 
   getTransactions(pageNumber: number = 0) {
     this.loading = true;
-    this.subscription = this._walletService
-      .getAllTransfers(pageNumber)
-      .subscribe(
-        (result) => {
-          this.walletTransfers = result.items;
-          this.fullResult = result;
-          this.loading = false;
-        },
-        (error) => {
-          console.log(error);
-          this.loading = false;
-        }
-      );
+    this.subscription = this._transactionService.getAll(pageNumber).subscribe(
+      (result) => {
+        this.transactions = result.data.data;
+        this.fullResult = result;
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+      }
+    );
   }
 
   isNumber(number) {

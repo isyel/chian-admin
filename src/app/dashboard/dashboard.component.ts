@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAllPayments() {
-    this.subscription = this.paymentService.getAll().subscribe(
+    this.subscription = this.paymentService.getHistory().subscribe(
       (result) => {
         console.log("Payments result: ", result);
         this.payments = result.data.data.reduce(
