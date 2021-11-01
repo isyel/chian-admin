@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { CylindersComponent } from "./cylinders/cylinders.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { Error404Component } from "./error-pages/error404/error404.component";
 
@@ -17,7 +16,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./users/users.module").then((m) => m.UsersModule),
   },
-  { path: "cylinders", component: CylindersComponent },
+  {
+    path: "cylinders",
+    loadChildren: () =>
+      import("./cylinders/cylinders.module").then((m) => m.CylindersModule),
+  },
   {
     path: "companies",
     loadChildren: () =>

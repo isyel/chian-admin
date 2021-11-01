@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs";
-import { CommonMethods } from "../app.common";
-import { OptionsModel } from "../models/OptionsModel";
-import { ResultModel } from "../models/ResultModel";
-import { OptionsService } from "../services/options/options.service";
+import { OptionsService } from "src/app/services/options/options.service";
+import { CommonMethods } from "../../app.common";
+import { OptionsModel } from "../../models/OptionsModel";
+import { ResultModel } from "../../models/ResultModel";
 
 @Component({
   selector: "app-cylinders",

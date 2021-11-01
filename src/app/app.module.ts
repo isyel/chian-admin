@@ -24,7 +24,6 @@ import { Error404Component } from "./error-pages/error404/error404.component";
 import { AppConfig } from "./services/app-config";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { NotificationsService } from "./services/notifications/notifications.service";
-import { CylindersComponent } from "./cylinders/cylinders.component";
 
 @NgModule({
   declarations: [
@@ -33,13 +32,11 @@ import { CylindersComponent } from "./cylinders/cylinders.component";
     SidebarComponent,
     FooterComponent,
     DashboardComponent,
-    CylindersComponent,
     Error404Component,
     TodoListComponent,
     TodoComponent,
     SpinnerComponent,
     ContentAnimateDirective,
-    CylindersComponent,
   ],
   imports: [
     BrowserModule,
