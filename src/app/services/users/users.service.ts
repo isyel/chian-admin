@@ -34,6 +34,30 @@ export class UsersService {
   }
 
   /**
+   * Get Vendors List
+   *
+   * @param pageNumber
+   * @returns ResultModel
+   * @memberof UsersService
+   */
+  public getVendorsList(pageNumber = 1) {
+    this.service.setActionUrl(this.actionUrl, "all-vendors/");
+    return this.service.getAllPaginate<any>(pageNumber);
+  }
+
+  /**
+   * Get Agents List
+   *
+   * @param pageNumber
+   * @returns ResultModel
+   * @memberof UsersService
+   */
+  public getDeliveryAgentsList(pageNumber = 1) {
+    this.service.setActionUrl(this.actionUrl, "all-deliveryagents/");
+    return this.service.getAllPaginate<any>(pageNumber);
+  }
+
+  /**
    * Update User Profile
    *
    * @param userId

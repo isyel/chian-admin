@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { OrderModel, OrderModelPayload } from 'src/app/models/OrderModel';
-import { ResultModel } from 'src/app/models/ResultModel';
-import { BaseServiceService } from '../base-service.service';
+import { Injectable } from "@angular/core";
+import { OrderModel, OrderModelPayload } from "src/app/models/OrderModel";
+import { ResultModel } from "src/app/models/ResultModel";
+import { BaseServiceService } from "../base-service.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class OrdersService {
-  actionUrl = 'api/orders/';
+  actionUrl = "api/orders/";
+  transactionStatePath = "api/transactionstate/";
 
   constructor(public service: BaseServiceService) {}
 
@@ -67,20 +68,68 @@ export class OrdersService {
    * @memberof OrdersService
    */
   public getHistory(userId: string) {
-    this.service.setActionUrl(this.actionUrl, 'user/');
+    this.service.setActionUrl(this.actionUrl, "user/");
     return this.service.getById<ResultModel>(userId);
   }
 
   /**
-   * Get Pending Order
+   * Get Unassigned Order
    *
-   * @param userId
+   * @returns ResultModel
+   * @memberof OrdersService
+   */
+  public getUnassigned() {
+    this.service.setActionUrl(this.actionUrl, "unassigned-agent/");
+    return this.service.getAll<ResultModel>();
+  }
+
+  /**
+   * Get Unassigned To Vendor
+   *
+   * @returns ResultModel
+   * @memberof OrdersService
+   */
+  public getUnassignedVendor() {
+    this.service.setActionUrl(this.actionUrl, "unassigned-vendor/");
+    return this.service.getAll<ResultModel>();
+  }
+
+  /**
+   * Assign Order Agent
+   *
+   * @param orderId
+   * @param payload
    * @returns OrderModel
    * @memberof OrdersService
    */
-  public getPending(userId: string) {
-    this.service.setActionUrl(this.actionUrl, 'pending/');
-    return this.service.getById<OrderModel>(userId);
+  public assignToAgent(orderId: string, payload: OrderModelPayload) {
+    this.service.setActionUrl(this.actionUrl, "assign-agent");
+    return this.service.update<any>(orderId, payload);
+  }
+
+  /**
+   * Assign Order Vendor
+   *
+   * @param orderId
+   * @param payload
+   * @returns OrderModel
+   * @memberof OrdersService
+   */
+  public assignToVendor(orderId: string, payload: OrderModelPayload) {
+    this.service.setActionUrl(this.actionUrl, "assign-vendor");
+    return this.service.update<any>(orderId, payload);
+  }
+
+  /**
+   * Cancel Order
+   *
+   * @param orderId
+   * @returns any
+   * @memberof OrdersService
+   */
+  public cancel(orderId: string) {
+    this.service.setActionUrl(this.actionUrl, "cancel");
+    return this.service.getById<any>(orderId);
   }
 
   /**
