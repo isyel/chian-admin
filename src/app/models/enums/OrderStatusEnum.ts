@@ -4,4 +4,5 @@ export enum OrderStatusEnum {
   received,
   pending,
   delivered,
+  cancelled,
 }

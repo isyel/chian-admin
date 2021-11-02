@@ -5,11 +5,11 @@ import { OrderModel } from "src/app/models/OrderModel";
 import { OrdersService } from "src/app/services/orders/orders.service";
 
 @Component({
-  selector: "app-advert",
-  templateUrl: "./advert.component.html",
-  styleUrls: ["./advert.component.scss"],
+  selector: "app-order",
+  templateUrl: "./order.component.html",
+  styleUrls: ["./order.component.scss"],
 })
-export class AdvertComponent implements OnInit {
+export class OrderComponent implements OnInit {
   orderDetails: OrderModel;
   loading: boolean;
   private subscription: Subscription;
@@ -21,7 +21,7 @@ export class AdvertComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      let orderId = +params["id"]; // (+) converts string 'id' to a number
+      let orderId = params["id"]; // (+) converts string 'id' to a number
       // In a real app: dispatch action to load the details here.
       this.getOrderDetails(orderId);
     });

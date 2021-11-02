@@ -1,26 +1,28 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { CommonMethods } from "src/app/app.common";
+import { OrderStatusEnum } from "src/app/models/enums/OrderStatusEnum";
+import { OrderModel } from "src/app/models/OrderModel";
 import { ResultModel } from "src/app/models/ResultModel";
 import { OrdersService } from "src/app/services/orders/orders.service";
 
 @Component({
-  selector: "app-offers",
-  templateUrl: "./offers.component.html",
-  styleUrls: ["./offers.component.scss"],
+  selector: "app-orders",
+  templateUrl: "./orders.component.html",
+  styleUrls: ["./orders.component.scss"],
 })
-export class OffersComponent implements OnInit {
+export class OrdersComponent implements OnInit {
   loading: boolean;
   noOfPages: any;
   fullResult: ResultModel;
   searchTerm: string;
-  activeAdverts: any[];
-  scheduledAdverts: any[];
-  endedAdverts: any[];
+  deliveredOrders: OrderModel[];
+  pendingOrders: OrderModel[];
+  cancelledOrders: OrderModel[];
   private subscription: Subscription;
 
   constructor(
-    private _advertService: OrdersService,
+    private _ordersService: OrdersService,
     public _common: CommonMethods
   ) {}
 
@@ -30,13 +32,13 @@ export class OffersComponent implements OnInit {
 
   fetchAllAdverts(pageNumber: number = 0, searchTerm = "") {
     this.loading = true;
-    this.subscription = this._advertService.getAll().subscribe(
+    this.subscription = this._ordersService.getAll().subscribe(
       (result) => {
         this.loading = false;
-        this.fullResult = result;
+        this.fullResult = result.data;
         console.log("this.fullResult: ", this.fullResult);
 
-        this.processOfferType(result.data);
+        this.processOrderData(result.data.data);
       },
       (error) => {
         console.log(error);
@@ -45,16 +47,16 @@ export class OffersComponent implements OnInit {
     );
   }
 
-  processOfferType(adverts: any[]) {
+  processOrderData(orders: OrderModel[]) {
     let currentDate = new Date();
-    this.endedAdverts = adverts.filter(
-      (advert) => new Date(advert.proposedEndDate) <= currentDate
+    this.cancelledOrders = orders.filter(
+      (order) => order.orderStatus === "cancelled"
     );
-    this.activeAdverts = adverts.filter(
-      (advert) => new Date(advert.offerStartDate) <= currentDate
+    this.deliveredOrders = orders.filter(
+      (order) => order.orderStatus === "delivered"
     );
-    this.scheduledAdverts = adverts.filter(
-      (advert) => new Date(advert.offerStartDate) >= currentDate
+    this.pendingOrders = orders.filter(
+      (order) => OrderStatusEnum[order.orderStatus] < 2
     );
   }
 

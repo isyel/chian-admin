@@ -39,7 +39,7 @@ export class BaseServiceService {
 
   public getById<T>(id: string): Observable<T> {
     return this.http
-      .get<T>(`${this.baseUrl}${this.actionUrl}${id}/`)
+      .get<T>(`${this.baseUrl}${this.actionUrl}${id}`)
       .pipe(retry(3), catchError(this.handleError));
   }
 

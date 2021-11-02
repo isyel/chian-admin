@@ -1,0 +1,41 @@
+<app-header pageTitle="Orders" icon="mdi-cart"></app-header>
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Orders</h4>
+        <p class="card-description">A list of all orders made</p>
+        <ngb-tabset type="pills" class="pills-success">
+          <ngb-tab title="Delivered ({{ deliveredOrders?.length }})">
+            <ng-template ngbTabContent>
+              <app-order-table
+                [orders]="deliveredOrders"
+                orderType="Delivered"
+              ></app-order-table>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Pending ({{ pendingOrders?.length }})">
+            <ng-template ngbTabContent>
+              <app-order-table
+                [orders]="pendingOrders"
+                orderType="Pending"
+              ></app-order-table>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Cancelled ({{ cancelledOrders?.length }})">
+            <ng-template ngbTabContent>
+              <app-order-table
+                [orders]="cancelledOrders"
+                orderType="Cancelled"
+              ></app-order-table>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+        <app-list-pagination
+          [fullResult]="fullResult"
+          (getNextPage)="goToSpecificPage($event)"
+        ></app-list-pagination>
+      </div>
+    </div>
+  </div>
+</div>

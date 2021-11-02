@@ -7,9 +7,9 @@ const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
   { path: "dashboard", component: DashboardComponent },
   {
-    path: "adverts",
+    path: "orders",
     loadChildren: () =>
-      import("./adverts/adverts.module").then((m) => m.AdvertsModule),
+      import("./orders/orders.module").then((m) => m.OrdersModule),
   },
   {
     path: "users",
