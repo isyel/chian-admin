@@ -5,7 +5,6 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs";
 import { CommonMethods } from "src/app/app.common";
 import { RegisterModel } from "src/app/models/AuthModel";
-import { UserTypeEnum } from "src/app/models/enums/UserTypeEnum";
 import { ResultModel } from "src/app/models/ResultModel";
 import { UserModel } from "src/app/models/UserModel";
 import { AuthenticationService } from "src/app/services/authentication/authentication.service";
@@ -105,9 +104,6 @@ export class UsersListComponent implements OnInit {
       password: this.signupForm.value.password,
       referralId: this.signupForm.value.referralId || "",
       userType: this.userType,
-      location: this.signupForm.value.location,
-      latitude: this.signupForm.value.latitude,
-      longitude: this.signupForm.value.longitude,
       vehicleNo: this.signupForm.value.vehicleNo,
       pricePackage: this.signupForm.value.pricePackage,
     };

@@ -4,5 +4,5 @@ export type OptionsModel = {
   size: number;
   price: number;
   name: string;
-  discription?: string;
+  discription: string;
 } & BaseModel;

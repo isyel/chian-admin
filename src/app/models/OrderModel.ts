@@ -1,5 +1,8 @@
+import { AddressModel } from './AddressModel';
 import { BaseModel } from './BaseModel';
+import { DeliveryAgentModel } from './DeliveryAgentModel';
 import { OptionsModel } from './OptionsModel';
+import { VendorModel } from './VendorModel';
 
 export type OrderModel = {
   userId: string;
@@ -21,7 +24,11 @@ export type OrderModel = {
   paymentStatus?: string;
   paymentType?: string;
   totalPrice: number;
+  totalItemPrice: number;
   orderStatus: string;
+  vendor?: VendorModel;
+  deliveryAgent?: DeliveryAgentModel;
+  deliveryStatus?: string;
 } & BaseModel;
 
 export type OrderModelPayload = {
@@ -37,3 +44,12 @@ export type OrderModelPayload = {
   paymentMethod?: string;
   paymentStatus?: string;
 };
+
+export type ShippingPayloadModel = {
+  userId: string;
+  orderId?: string;
+  amount?: number;
+  address: AddressModel;
+  deliveryPrice: number;
+  quantity: number;
+} & BaseModel;

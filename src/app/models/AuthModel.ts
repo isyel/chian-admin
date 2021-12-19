@@ -7,11 +7,11 @@ export type RegisterModel = {
   email: string;
   referralId?: string;
   userType: string;
-  location: string;
+  location?: string;
   latitude?: number;
   longitude?: number;
-  pricePackage?: number;
-  vehicleNo?: number;
+  vehicleNo?: string;
+  pricePackage?: string;
 } & BaseModel;
 
 export type LoginModel = {

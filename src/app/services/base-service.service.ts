@@ -51,6 +51,14 @@ export class BaseServiceService {
       .pipe(catchError(this.handleError));
   }
 
+  public updateStatus<T>(data: any): Observable<T> {
+    // const data = JSON.stringify(itemToUpdate);
+
+    return this.http
+      .put<T>(`${this.baseUrl}${this.actionUrl}`, data)
+      .pipe(catchError(this.handleError));
+  }
+
   public update<T>(id: string, data: any): Observable<T> {
     // const data = JSON.stringify(itemToUpdate);
 
