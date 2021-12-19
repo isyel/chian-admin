@@ -1,7 +1,7 @@
-import { BaseModel } from './BaseModel';
-import { OrderModel } from './OrderModel';
-import { PaymentModel } from './PaymentModel';
-import { UserModel } from './UserModel';
+import { BaseModel } from "./BaseModel";
+import { OrderModel } from "./OrderModel";
+import { PaymentModel } from "./PaymentModel";
+import { UserModel, VendorModel } from "./UserModel";
 
 export type TransactionModel = {
   transactionId: string;
@@ -10,7 +10,7 @@ export type TransactionModel = {
   agentDetails: UserModel;
   clientDetails: UserModel;
   orderDetails: OrderModel;
-  vendorDetails: UserModel;
+  vendorDetails: VendorModel;
   paymentDetails: PaymentModel;
   shippingDetails: any;
 } & BaseModel;

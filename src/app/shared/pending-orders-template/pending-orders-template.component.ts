@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
-import { OrderModel } from "src/app/models/OrderModel";
+import { TransactionModel } from "src/app/models/TransactionModel";
 
 @Component({
   selector: "app-pending-orders-template",
@@ -8,7 +8,7 @@ import { OrderModel } from "src/app/models/OrderModel";
   styleUrls: ["./pending-orders-template.component.scss"],
 })
 export class PendingOrdersTemplateComponent implements OnInit {
-  @Input() orders: OrderModel[];
+  @Input() orders: TransactionModel[];
   @Input() orderType: string;
   @Input() fullResult: string;
 

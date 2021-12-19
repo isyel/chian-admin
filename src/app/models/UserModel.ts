@@ -17,12 +17,19 @@ export type UserModel = {
   location: string;
   latitude?: number;
   vehicleNo?: string;
+  vehicle?: string;
   pricePackage?: string;
   longitude?: number;
+  status?: string;
   earnings: EarningsModel;
   emailVerified: string;
   phoneVerified: string;
 } & BaseModel;
+
+export type VendorModel = {
+  transactions: any[];
+  rating: number;
+} & UserModel;
 
 export type AuthDataModel = {
   session?: string;

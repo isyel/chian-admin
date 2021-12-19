@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { OrderModel } from "src/app/models/OrderModel";
+import { TransactionModel } from "src/app/models/TransactionModel";
 
 @Component({
   selector: "app-order-table",
@@ -8,7 +8,7 @@ import { OrderModel } from "src/app/models/OrderModel";
   styleUrls: ["./order-table.component.scss"],
 })
 export class OrderTableComponent implements OnInit {
-  @Input() orders: OrderModel[];
+  @Input() orders: TransactionModel[];
   @Input() orderType: string;
 
   constructor(private router: Router) {}

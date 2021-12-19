@@ -1,84 +1,131 @@
 <app-header
-  *ngIf="companyDetails"
-  [pageTitle]="companyDetails?.businessName"
-  path="Companies / {{ companyDetails?.businessName }}"
-  icon="mdi-briefcase-check"
+  *ngIf="order"
+  [pageTitle]="order?.orderDetails?.orderItems[0].options.name"
+  path="Unassigned / {{ order?.orderDetails?.orderItems[0].options.name }}"
+  icon="mdi-cart"
 ></app-header>
 <div class="row">
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">{{ companyDetails?.businessName }}</h4>
-        <p class="card-description">{{ companyDetails?.website }}</p>
+        <h4 class="card-title">
+          {{ order?.orderDetails?.orderItems[0].options.name }}
+        </h4>
+        <p class="card-description">
+          {{ order?.orderDetails?.orderItems[0].options.discription }}
+        </p>
         <ngb-tabset class="tab-vertical">
           <ngb-tab>
             <ng-template ngbTabTitle>
-              Home
+              Order
               <i class="mdi mdi-home-outline text-info ml-2"></i>
             </ng-template>
             <ng-template ngbTabContent>
-              <div class="text-center">
-                <img
-                  [src]="
-                    companyDetails.logo?.length > 0
-                      ? companyDetails.logo
-                      : 'assets/images/samples/300x300/12.jpg'
-                  "
-                  onerror="this.src='assets/images/samples/300x300/12.jpg'"
-                  class="center-cropped mr-3 w-25 mb-4"
-                  [alt]="companyDetails.businessName"
-                />
-              </div>
+              <h4>Order Details</h4>
               <p>
-                {{ companyDetails.companySummary }}
+                Order: {{ order?.orderDetails?.orderItems[0].options.name }}
+              </p>
+              <p>Price: {{ order?.transactionAmount }}</p>
+              <p>
+                Shipping Location: {{ order?.shippingDetails?.address }},
+                {{ order?.shippingDetails?.city }}
+                {{ order?.shippingDetails?.state }}
+              </p>
+              <p>
+                Client: {{ order?.clientDetails?.fullName }},
+                {{ order?.clientDetails?.phoneNumber }}
               </p>
             </ng-template>
           </ngb-tab>
           <ngb-tab>
             <ng-template ngbTabTitle>
-              Business Details
+              Delivery Agent
               <i class="mdi mdi-account-outline text-danger ml-2"></i>
             </ng-template>
             <ng-template ngbTabContent>
-              <div class="text-center">
+              <h4>Delivery Agent Details</h4>
+              <div class="text-center" *ngIf="order?.agentDetails">
                 <img
                   [src]="
-                    companyDetails.user?.profilePhoto?.length > 0
-                      ? companyDetails.user?.profilePhoto
+                    order?.agentDetails?.avatar?.length > 0
+                      ? order?.agentDetails?.avatar
                       : 'assets/images/faces/face1.jpg'
                   "
                   onerror="this.src='assets/images/faces/face1.jpg'"
                   class="center-cropped mb-3 w-25 rounded"
-                  [alt]="companyDetails.user?.screenName"
+                  [alt]="order?.agentDetails?.fullName"
                 />
-                <h5 class="mt-0" *ngIf="companyDetails.user">
-                  Owner: {{ companyDetails.user.screenName }}
-                </h5>
-                <p class="mb-0" *ngIf="companyDetails.employeeCapacity">
-                  Employee Capacity: {{ companyDetails.employeeCapacity }}
+                <h5 class="mt-0">Name: {{ order?.agentDetails?.fullName }}</h5>
+                <p class="mb-0">
+                  Availability: {{ order?.agentDetails?.status }}
                 </p>
-                <p class="mb-0" *ngIf="companyDetails.city">
-                  Location: {{ companyDetails.city }},
-                  {{ getCountry(companyDetails.country) }}
+                <p class="mb-0">
+                  Location: {{ order?.agentDetails?.location }}
                 </p>
+                <p class="mb-0">Vehicle: {{ order?.agentDetails?.vehicle }}</p>
+                <p class="mb-0">
+                  Fulfilled Orders:
+                  {{ order?.agentDetails?.noOfFulfilledDeliveries }}
+                </p>
+              </div>
+              <div *ngIf="!order?.agentDetails">
+                No Agent Assigned Yet<br />
+                <button
+                  type="button"
+                  class="btn btn-gradient-primary btn-fw"
+                  (click)="getAvailableAgents()"
+                >
+                  Assign Delivery Agent
+                </button>
+                <div>{{ deliveryAgentsList?.length }}</div>
               </div>
             </ng-template>
           </ngb-tab>
           <ngb-tab>
             <ng-template ngbTabTitle>
-              Contact
+              Vendor
               <i class="mdi mdi-email-outline text-success ml-2"></i>
             </ng-template>
             <ng-template ngbTabContent>
-              <h4>Company Contact Details</h4>
-              <p *ngIf="companyDetails.phoneNumber">
-                <i class="mdi mdi-phone text-info"></i>
-                {{ companyDetails.phoneNumber }}
-              </p>
-              <p *ngIf="companyDetails.businessEmail">
-                <i class="mdi mdi-email-outline text-success"></i>
-                {{ companyDetails.businessEmail }}
-              </p>
+              <h4>Vendor Contact Details</h4>
+              <div *ngIf="order?.vendorDetails">
+                <p>
+                  <i class="mdi mdi-phone text-info"></i>
+                  Business Name: {{ order?.vendorDetails?.fullName }}
+                </p>
+                <p>
+                  <i class="mdi mdi-phone text-info"></i>
+                  Business Address: {{ order?.vendorDetails?.location }}
+                </p>
+                <p>
+                  <i class="mdi mdi-phone text-info"></i>
+                  Business Contact: {{ order?.vendorDetails?.phoneNumber }}
+                </p>
+                <p>
+                  <i class="mdi mdi-phone text-info"></i>
+                  Business Rating: {{ order?.vendorDetails?.rating }}
+                </p>
+                <p>
+                  <i class="mdi mdi-phone text-info"></i>
+                  Fullfilled Orders:
+                  {{ order?.vendorDetails?.transactions.length }}
+                </p>
+                <p>
+                  <i class="mdi mdi-email-outline text-success"></i>
+                  {{ order?.vendorDetails?.email }}
+                </p>
+              </div>
+              <div *ngIf="!order?.vendorDetails">
+                No vendor Assigned <br />
+                <button
+                  type="button"
+                  class="btn btn-gradient-primary btn-fw"
+                  (click)="getVendors()"
+                >
+                  Assign Vendor
+                </button>
+                <div>{{ vendorsList?.length }}</div>
+              </div>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

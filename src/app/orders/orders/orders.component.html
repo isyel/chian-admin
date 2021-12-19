@@ -6,7 +6,7 @@
         <h4 class="card-title">Orders</h4>
         <p class="card-description">A list of all orders made</p>
         <ngb-tabset type="pills" class="pills-success">
-          <ngb-tab title="Delivered ({{ deliveredOrders?.length }})">
+          <ngb-tab title="Delivered ({{ deliveredOrders?.length || 0 }})">
             <ng-template ngbTabContent>
               <app-order-table
                 [orders]="deliveredOrders"
@@ -14,7 +14,7 @@
               ></app-order-table>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Pending ({{ pendingOrders?.length }})">
+          <ngb-tab title="Pending ({{ pendingOrders?.length || 0 }})">
             <ng-template ngbTabContent>
               <app-order-table
                 [orders]="pendingOrders"
@@ -22,7 +22,7 @@
               ></app-order-table>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Cancelled ({{ cancelledOrders?.length }})">
+          <ngb-tab title="Cancelled ({{ cancelledOrders?.length || 0 }})">
             <ng-template ngbTabContent>
               <app-order-table
                 [orders]="cancelledOrders"

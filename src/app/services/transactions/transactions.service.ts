@@ -86,6 +86,30 @@ export class TransactionsService {
   }
 
   /**
+   * Get Unasssigned to agent Order
+   *
+   * @param userId
+   * @returns ResultModel
+   * @memberof TransactionsService
+   */
+  public getUnassignedAgentOrder(userId?: string) {
+    this.service.setActionUrl(this.actionUrl, `unassigned-agent`);
+    return this.service.getAll<ResultModel>();
+  }
+
+  /**
+   * Get Unasssigned to vendor Order
+   *
+   * @param userId
+   * @returns ResultModel
+   * @memberof TransactionsService
+   */
+  public getUnassignedVendorOrder(userId?: string) {
+    this.service.setActionUrl(this.actionUrl, `unassigned-vendor`);
+    return this.service.getAll<ResultModel>();
+  }
+
+  /**
    * Accept Orders
    *
    * @param data

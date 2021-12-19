@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { OrderModel } from "src/app/models/OrderModel";
 import { ResultModel } from "src/app/models/ResultModel";
-import { OrdersService } from "src/app/services/orders/orders.service";
+import { TransactionsService } from "src/app/services/transactions/transactions.service";
 
 @Component({
   selector: "app-pending-orders-list",
@@ -18,7 +18,10 @@ export class PendingOrdersListComponent implements OnInit {
   loading: boolean;
   private subscription: Subscription;
 
-  constructor(private _ordersService: OrdersService, private router: Router) {}
+  constructor(
+    private _transactionsService: TransactionsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getPendingAgentOrders();
@@ -26,29 +29,33 @@ export class PendingOrdersListComponent implements OnInit {
   }
 
   getPendingAgentOrders(pageNumber: number = 0) {
-    this.subscription = this._ordersService.getUnassigned().subscribe(
-      (result) => {
-        this.unassignedAgents = result.data.data;
-        this.fullResultAgents = result.data;
-        this.loading = false;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.subscription = this._transactionsService
+      .getUnassignedAgentOrder()
+      .subscribe(
+        (result) => {
+          this.unassignedAgents = result.data.data;
+          this.fullResultAgents = result.data;
+          this.loading = false;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   getPendingVendorOrders(pageNumber: number = 0) {
-    this.subscription = this._ordersService.getUnassignedVendor().subscribe(
-      (result) => {
-        this.unassignedVendors = result.data.data;
-        this.fullResultVendors = result.data;
-        this.loading = false;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.subscription = this._transactionsService
+      .getUnassignedVendorOrder()
+      .subscribe(
+        (result) => {
+          this.unassignedVendors = result.data.data;
+          this.fullResultVendors = result.data;
+          this.loading = false;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   goToSpecificPage(event) {

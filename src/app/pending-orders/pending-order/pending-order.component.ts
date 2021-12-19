@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { CompaniesService } from "src/app/services/companies/companies.service";
+import { TransactionModel } from "src/app/models/TransactionModel";
+import { UserModel, VendorModel } from "src/app/models/UserModel";
+import { TransactionsService } from "src/app/services/transactions/transactions.service";
+import { UsersService } from "src/app/services/users/users.service";
 
 @Component({
   selector: "app-pending-order",
@@ -9,30 +12,48 @@ import { CompaniesService } from "src/app/services/companies/companies.service";
   styleUrls: ["./pending-order.component.scss"],
 })
 export class PendingOrderComponent implements OnInit {
-  companyDetails: any;
+  order: TransactionModel;
+  vendorsList: VendorModel[];
+  deliveryAgentsList: UserModel[];
   loading: boolean;
   private subscription: Subscription;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private _companiesService: CompaniesService
+    private _transactionsService: TransactionsService,
+    private _usersService: UsersService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      let companyId = +params["id"]; // (+) converts string 'id' to a number
+      let transactionId = params["id"]; // (+) converts string 'id' to a number
       // In a real app: dispatch action to load the details here.
-      this.getCompanyDetails(companyId);
+      this.gerOrderDetails(transactionId);
     });
   }
 
-  getCompanyDetails(companyId) {
+  gerOrderDetails(transactionId: string) {
     this.loading = true;
-    this.subscription = this._companiesService.getById(companyId).subscribe(
+    this.subscription = this._transactionsService
+      .getOne(transactionId)
+      .subscribe(
+        (result) => {
+          this.order = result.data;
+          this.loading = false;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getAvailableAgents() {
+    this.subscription = this._usersService.getDeliveryAgentsList().subscribe(
       (result) => {
-        this.companyDetails = result;
-        this.loading = false;
+        this.deliveryAgentsList = result.data.data.filter(
+          (agent: UserModel) => agent.status === "available"
+        );
       },
       (error) => {
         console.log(error);
@@ -40,8 +61,15 @@ export class PendingOrderComponent implements OnInit {
     );
   }
 
-  getCountry(countryId) {
-    return "N/A";
+  getVendors() {
+    this.subscription = this._usersService.getVendorsList().subscribe(
+      (result) => {
+        this.vendorsList = result.data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnDestroy() {

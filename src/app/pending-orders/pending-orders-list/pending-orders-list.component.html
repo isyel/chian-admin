@@ -6,19 +6,23 @@
         <h4 class="card-title">Unassigned Orders</h4>
         <p class="card-description">A list of all unassigned orders</p>
         <ngb-tabset type="pills" class="pills-success">
-          <ngb-tab title="Unassigned To Agents">
+          <ngb-tab
+            title="Unassigned To Agents ({{ unassignedAgents?.length || 0 }})"
+          >
             <ng-template ngbTabContent>
               <app-pending-orders-template
                 [orders]="unassignedAgents"
-                orderType="UnassignedAgents"
+                orderType="UnassignedAgents "
               ></app-pending-orders-template>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Unassigned To Vendors">
+          <ngb-tab
+            title="Unassigned To Vendors ({{ unassignedVendors?.length || 0 }})"
+          >
             <ng-template ngbTabContent>
               <app-pending-orders-template
                 [orders]="unassignedVendors"
-                orderType="UnassignedVendors"
+                orderType="UnassignedVendors "
               ></app-pending-orders-template>
             </ng-template>
           </ngb-tab>
