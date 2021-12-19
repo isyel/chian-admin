@@ -16,9 +16,9 @@ export class UsersService {
    * @returns UserModel[]
    * @memberof UsersService
    */
-  public getAll() {
+  public getAll(pageNumber = 0) {
     this.service.setActionUrl(this.actionUrl);
-    return this.service.getAll<ResultModel>();
+    return this.service.getAllPaginate<ResultModel>(pageNumber);
   }
 
   /**

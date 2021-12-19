@@ -2,7 +2,7 @@
   *ngIf="fullResult?.data.totalPages > 1"
   [collectionSize]="fullResult.data.totalCount"
   [pageSize]="fullResult.data.pageSize"
-  [page]="fullResult.data.pageIndex + 1"
+  [page]="fullResult.data.pageIndex"
   [rotate]="true"
   [ellipses]="false"
   aria-label="Default pagination"

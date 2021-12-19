@@ -79,6 +79,15 @@ export class UsersListComponent implements OnInit {
 
   checkFormValidity() {
     if (this.userType === "Delivery Agent") {
+      console.log("Form is valid: ", this.signupForm.valid);
+      console.log(
+        "Agent Not Valid: ",
+        this.signupForm.value.location === "" ||
+          this.signupForm.value.vehicleNo === ""
+      );
+      console.log("location: ", this.signupForm.value.location);
+      console.log("vehicleNo: ", this.signupForm.value.vehicleNo);
+
       return (
         this.signupForm.value.location === "" ||
         this.signupForm.value.vehicleNo === ""
@@ -95,7 +104,7 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  handleSignup(handleModalClose) {
+  handleCreateUser(handleModalClose) {
     console.log(this.signupForm);
     const signupCredentials: RegisterModel = {
       fullName: this.signupForm.value.fullName,
@@ -104,8 +113,11 @@ export class UsersListComponent implements OnInit {
       password: this.signupForm.value.password,
       referralId: this.signupForm.value.referralId || "",
       userType: this.userType,
-      vehicleNo: this.signupForm.value.vehicleNo,
-      pricePackage: this.signupForm.value.pricePackage,
+      location: this.signupForm.value.location || "",
+      vehicleNo: this.signupForm.value.vehicleNo || "",
+      latitude: this.signupForm.value.latitude || "",
+      longitude: this.signupForm.value.longitude || "",
+      pricePackage: this.signupForm.value.pricePackage || "",
     };
     this._authService.register(signupCredentials).subscribe(
       async (result) => {
@@ -123,10 +135,10 @@ export class UsersListComponent implements OnInit {
     );
   }
 
-  getUsers(pageNumber = 0) {
-    this.subscription = this._usersService.getAll().subscribe(
+  getUsers(pageNumber = 1) {
+    this.subscription = this._usersService.getAll(pageNumber).subscribe(
       (result) => {
-        this.fullResult = result.data;
+        this.fullResult = result;
         this.users = result.data.data;
         console.log("this.users: ", this.users);
       },
@@ -158,7 +170,7 @@ export class UsersListComponent implements OnInit {
 
   goToSpecificPage(event) {
     console.log("goToSpecificPage, event is: ", event);
-    this.getUsers(+event - 1);
+    this.getUsers(+event);
     //this.fetchNewPage(page);
   }
 

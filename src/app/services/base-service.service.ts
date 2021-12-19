@@ -24,7 +24,7 @@ export class BaseServiceService {
 
   public getAllPaginate<T>(pageNumber = 0): Observable<T> {
     return this.http
-      .get<T>(`${this.baseUrl}${this.actionUrl}?PageNumber=${pageNumber}`)
+      .get<T>(`${this.baseUrl}${this.actionUrl}?page=${pageNumber}`)
       .pipe(retry(3), catchError(this.handleError));
   }
 
@@ -33,7 +33,7 @@ export class BaseServiceService {
     pageNumber = 0
   ): Observable<T> {
     return this.http
-      .get<T>(`${this.baseUrl}${this.actionUrl}/${id}?PageNumber=${pageNumber}`)
+      .get<T>(`${this.baseUrl}${this.actionUrl}/${id}?page=${pageNumber}`)
       .pipe(retry(3), catchError(this.handleError));
   }
 

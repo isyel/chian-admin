@@ -188,9 +188,9 @@
               <label for="address">User Address</label>
               <input
                 type="text"
-                formControlName="address"
+                formControlName="location"
                 class="form-control form-control-lg"
-                id="address"
+                id="location"
                 placeholder="Address"
                 [required]="userType !== 'User'"
               />
@@ -275,7 +275,7 @@
       <button
         type="button"
         class="btn btn-success"
-        (click)="handleSignup(modal)"
+        (click)="handleCreateUser(modal)"
         [disabled]="!signupForm.valid || checkFormValidity()"
       >
         Create User
