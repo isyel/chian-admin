@@ -2,9 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { CommonMethods } from "src/app/app.common";
 import { OrderStatusEnum } from "src/app/models/enums/OrderStatusEnum";
-import { OrderModel } from "src/app/models/OrderModel";
 import { ResultModel } from "src/app/models/ResultModel";
-import { OrdersService } from "src/app/services/orders/orders.service";
+import { TransactionModel } from "src/app/models/TransactionModel";
+import { TransactionsService } from "src/app/services/transactions/transactions.service";
+import { UserData } from "src/app/user-data";
 
 @Component({
   selector: "app-orders",
@@ -16,14 +17,15 @@ export class OrdersComponent implements OnInit {
   noOfPages: any;
   fullResult: ResultModel;
   searchTerm: string;
-  deliveredOrders: OrderModel[];
-  pendingOrders: OrderModel[];
-  cancelledOrders: OrderModel[];
+  deliveredOrders: TransactionModel[];
+  pendingOrders: TransactionModel[];
+  cancelledOrders: TransactionModel[];
   private subscription: Subscription;
 
   constructor(
-    private _ordersService: OrdersService,
-    public _common: CommonMethods
+    private _transactionsService: TransactionsService,
+    public _common: CommonMethods,
+    private _userData: UserData
   ) {}
 
   ngOnInit(): void {
@@ -31,32 +33,35 @@ export class OrdersComponent implements OnInit {
   }
 
   fetchAllAdverts(pageNumber: number = 0, searchTerm = "") {
+    const userData = this._userData.getAuthorizationData();
     this.loading = true;
-    this.subscription = this._ordersService.getAll().subscribe(
-      (result) => {
-        this.loading = false;
-        this.fullResult = result.data;
-        console.log("this.fullResult: ", this.fullResult);
+    this.subscription = this._transactionsService
+      .getAll(pageNumber, userData.userDetails.userId)
+      .subscribe(
+        (result) => {
+          this.loading = false;
+          this.fullResult = result;
+          console.log("this.fullResult: ", this.fullResult);
 
-        this.processOrderData(result.data.data);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {}
-    );
+          this.processOrderData(result.data.data);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {}
+      );
   }
 
-  processOrderData(orders: OrderModel[]) {
+  processOrderData(orders: TransactionModel[]) {
     let currentDate = new Date();
     this.cancelledOrders = orders.filter(
-      (order) => order.orderStatus === "cancelled"
+      (order) => order.orderDetails.orderStatus === "cancelled"
     );
     this.deliveredOrders = orders.filter(
-      (order) => order.orderStatus === "delivered"
+      (order) => order.orderDetails.orderStatus === "delivered"
     );
     this.pendingOrders = orders.filter(
-      (order) => OrderStatusEnum[order.orderStatus] < 2
+      (order) => OrderStatusEnum[order.orderDetails.orderStatus] < 4
     );
   }
 

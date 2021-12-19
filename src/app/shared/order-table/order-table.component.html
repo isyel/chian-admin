@@ -13,16 +13,17 @@
     <tbody>
       <tr *ngFor="let order of orders">
         <td class="py-1">
-          {{ order.orderItems[0].options.name }} x
-          {{ order.orderItems[0].quantity }}
+          {{ order.orderDetails.orderItems[0].options.name }} x
+          {{ order.orderDetails.orderItems[0].quantity }}
         </td>
-        <td>{{ order.totalPrice }}</td>
+        <td>{{ order.transactionAmount }}</td>
         <td>
-          {{ order.deliveryAddress.street }}, {{ order.deliveryAddress.city }}
+          {{ order.shippingDetails.deliveryAddress.street }},
+          {{ order.shippingDetails.deliveryAddress.city }}
         </td>
         <td>
           {{
-            order.paymentType === "payWithCard"
+            order.paymentDetails.paymentMethod === "payWithCard"
               ? "Card Payment"
               : "Pay On Delivery"
           }}
@@ -30,12 +31,12 @@
         <td>
           <label
             class="badge {{
-              order.orderStatus === 'delivered'
+              order.orderDetails.orderStatus === 'delivered'
                 ? 'badge-success'
                 : 'badge-danger'
             }}"
           >
-            {{ order.orderStatus }}
+            {{ order.orderDetails.orderStatus }}
           </label>
         </td>
         <td>{{ order.createdAt | date: "mediumDate" }}</td>
@@ -43,7 +44,7 @@
           <button
             type="button"
             class="btn btn-gradient-primary btn-rounded btn-icon"
-            (click)="goToOrder(order._id)"
+            (click)="goToOrder(order.transationId)"
           >
             <i class="mdi mdi-eye"></i>
           </button>

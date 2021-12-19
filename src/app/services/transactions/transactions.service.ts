@@ -14,6 +14,18 @@ export class TransactionsService {
   constructor(public service: BaseServiceService) {}
 
   /**
+   * Get All Transaction
+   *
+   * @param pageNumber
+   * @returns TransactionModel
+   * @memberof TransactionsService
+   */
+  public getAll(pageNumber: number, userId: string) {
+    this.service.setActionUrl(this.actionUrl);
+    return this.service.getAllPaginate<ResultModel>(pageNumber);
+  }
+
+  /**
    * Get Single Transaction
    *
    * @param transactionId
@@ -22,7 +34,7 @@ export class TransactionsService {
    */
   public getOne(transactionId: string) {
     this.service.setActionUrl(this.actionUrl);
-    return this.service.getById<TransactionModel>(transactionId);
+    return this.service.getById<ResultModel>(transactionId);
   }
 
   /**

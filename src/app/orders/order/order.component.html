@@ -1,6 +1,6 @@
 <app-header
-  *ngIf="orderDetails"
-  pageTitle="Order Item"
+  *ngIf="order"
+  pageTitle="{{ order.orderDetails.orderItems[0].options.name }}"
   path="Order / Order Item"
   icon="mdi-cart"
 ></app-header>
