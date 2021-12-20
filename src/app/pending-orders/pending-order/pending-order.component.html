@@ -77,7 +77,59 @@
                 >
                   Assign Delivery Agent
                 </button>
-                <div>{{ deliveryAgentsList?.length }}</div>
+
+                <div class="table-responsive" *ngIf="deliveryAgentsList">
+                  <br />
+                  Delivery Agents Available: {{ deliveryAgentsList?.length }}
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Agent Name</th>
+                        <th>Agent Location</th>
+                        <th>Contact Details</th>
+                        <th>Delivered Orders</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let agent of deliveryAgentsList">
+                        <td class="py-1">
+                          <img
+                            [src]="
+                              agent?.avatar?.length > 0
+                                ? _common.showImage(agent?.avatar)
+                                : 'assets/images/faces/face1.jpg'
+                            "
+                            onerror="this.src='assets/images/faces/face1.jpg'"
+                            class="center-cropped"
+                            [alt]="agent.fullName"
+                          />
+                        </td>
+                        <td>{{ agent.fullName }}</td>
+
+                        <td>{{ agent.location }}</td>
+                        <td>{{ agent.phoneNumber }}</td>
+                        <td>{{ agent.noOfDeliveries }}</td>
+                        <td class="d-flex justify-content-between flex-nowrap">
+                          <button
+                            type="button"
+                            class="
+                              btn btn-gradient-primary btn-rounded btn-icon
+                            "
+                            (click)="assignAgent(agent)"
+                          >
+                            <i class="mdi mdi-truck-delivery"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br />
+                  <app-list-pagination
+                    [fullResult]="vendorFullResult"
+                    (getNextPage)="getAvailableAgents($event)"
+                  ></app-list-pagination>
+                </div>
               </div>
             </ng-template>
           </ngb-tab>
@@ -124,7 +176,59 @@
                 >
                   Assign Vendor
                 </button>
-                <div>{{ vendorsList?.length }}</div>
+
+                <div class="table-responsive" *ngIf="vendorsList">
+                  <br />
+                  Vendors Available: {{ vendorsList?.length }}
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Business Name</th>
+                        <th>Business Address</th>
+                        <th>Contact Details</th>
+                        <th>Rating</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let vendor of vendorsList">
+                        <td class="py-1">
+                          <img
+                            [src]="
+                              vendor?.avatar?.length > 0
+                                ? _common.showImage(vendor?.avatar)
+                                : 'assets/images/faces/face1.jpg'
+                            "
+                            onerror="this.src='assets/images/faces/face1.jpg'"
+                            class="center-cropped"
+                            [alt]="vendor.screenName"
+                          />
+                        </td>
+                        <td>{{ vendor.fullName }}</td>
+
+                        <td>{{ vendor.location }}</td>
+                        <td>{{ vendor.phoneNumber }}</td>
+                        <td>{{ vendor.rating }}/10</td>
+                        <td class="d-flex justify-content-between flex-nowrap">
+                          <button
+                            type="button"
+                            class="
+                              btn btn-gradient-primary btn-rounded btn-icon
+                            "
+                            (click)="assignVendor(vendor)"
+                          >
+                            <i class="mdi mdi-gas-station"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br />
+                  <app-list-pagination
+                    [fullResult]="vendorFullResult"
+                    (getNextPage)="getVendors($event)"
+                  ></app-list-pagination>
+                </div>
               </div>
             </ng-template>
           </ngb-tab>

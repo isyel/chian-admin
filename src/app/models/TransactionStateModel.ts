@@ -1,5 +1,5 @@
 export type TransactionStateModel = {
   userId: number | string;
-  transactionId: number | string;
+  transationId: number | string;
   status?: string;
 };

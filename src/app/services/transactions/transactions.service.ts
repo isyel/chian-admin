@@ -134,6 +134,30 @@ export class TransactionsService {
   }
 
   /**
+   * Assign Agent
+   *
+   * @param data
+   * @returns ResultModel
+   * @memberof TransactionsService
+   */
+  public assignAgentToOrder(data: TransactionStateModel) {
+    this.service.setActionUrl(this.transactionStateUrl, `assign-agent`);
+    return this.service.updateStatus<any>(data);
+  }
+
+  /**
+   * Assign Vendor
+   *
+   * @param data
+   * @returns ResultModel
+   * @memberof TransactionsService
+   */
+  public assignVendorToOrder(data: TransactionStateModel) {
+    this.service.setActionUrl(this.transactionStateUrl, `assign-vendor`);
+    return this.service.updateStatus<any>(data);
+  }
+
+  /**
    * Mark Delivered
    *
    * @param data
