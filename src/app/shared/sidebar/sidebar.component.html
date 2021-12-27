@@ -59,46 +59,16 @@
         <i class="mdi mdi-gas-cylinder menu-icon"></i>
       </a>
     </li>
-    <li
-      class="nav-item"
-      [ngClass]="{
-        active: adverts.isActive
-      }"
-    >
+    <li class="nav-item">
       <a
         class="nav-link"
-        (click)="advertPagesCollapsed = !advertPagesCollapsed"
-        [attr.aria-expanded]="advertPagesCollapsed"
-        aria-controls="auth"
+        routerLink="orders/orders-list"
+        routerLinkActive="active"
+        #userPage="routerLinkActive"
       >
         <span class="menu-title">Orders</span>
-        <i class="menu-arrow"></i>
         <i class="mdi mdi-cart menu-icon"></i>
       </a>
-      <div class="collapse" id="auth" [ngbCollapse]="!advertPagesCollapsed">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="orders/orders-list"
-              routerLinkActive="active"
-              #adverts="routerLinkActive"
-            >
-              Orders List
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="companies/companies-list"
-              routerLinkActive="active"
-              #companies_list="routerLinkActive"
-            >
-              In Transit Orders
-            </a>
-          </li>
-        </ul>
-      </div>
     </li>
     <li
       class="nav-item"
@@ -203,7 +173,7 @@
 
     <!-- ----------------------------- Sample Pages -------------------------------- -->
 
-    <li
+    <!-- <li
       class="nav-item"
       [ngClass]="{
         active:
@@ -452,6 +422,6 @@
           </li>
         </ul>
       </div>
-    </li>
+    </li> -->
   </ul>
 </nav>
